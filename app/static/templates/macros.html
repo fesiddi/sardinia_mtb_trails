@@ -1,0 +1,19 @@
+{% macro map_area(id, name, description, difficulty, local_riders) %}
+<div id="space{{ id }}"></div>
+<div id="mapborder{{ id }}" style="border: 5px solid #000000; height: 50vh">
+    <div id="map{{ id }}" style="width: 100%; height: 100%"></div>
+</div>
+<div class="maptext" id="maptext{{ id }}">
+    <h2>{{ name }}</h2>
+    <p>{{ description }}</p>
+    <p><strong>Difficulty:</strong> {{ difficulty }}</p>
+    <p>
+        <strong>Local Riders:</strong>
+        {% for rider in local_riders %}
+        <a href="https://www.strava.com/athletes/{{ rider.strava_id }}"
+            >{{ rider.name }}</a
+        >
+        {% endfor %}
+    </p>
+</div>
+{% endmacro %}

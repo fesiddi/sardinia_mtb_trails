@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sardinia Trail Areas</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="icon"
+            href="{{ request.url_for('static', path='favicon.ico') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://openlayers.org/en/v6.5.0/css/ol.css"
+            type="text/css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ request.url_for('static', path='css/styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script src="https://openlayers.org/en/v6.5.0/build/ol.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Sardinia Trail Areas</h1>
+        </header>
+        <div id="mapsContainer">
+            {% import 'macros.html' as macros %} {% for area in trail_areas_data
+            %}
+            <div
+                class="map-area {% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %}"
+            >
+                {{ macros.map_area(loop.index, area.name, area.description,
+                area.difficulty, area.local_riders) }}
+            </div>
+            {% endfor %}
+        </div>
+        <footer>
+            <p>Copyright &copy; 2024 sfdev25. All rights reserved.</p>
+        </footer>
+        <script src="static/js/main.js" type="module"></script>
+    </body>
+</html>

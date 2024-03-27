@@ -1,0 +1,125 @@
+:root {
+    --dark-color: #2f3e46;
+    --primary-color-light: #52796f;
+    --primary-color-dark: #354f52;
+    --text-color-dark: #000000;
+    --text-color-light: #cad2c5;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: var(--primary-color-light);
+}
+
+header {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    font-style: bold;
+    background-color: var(--dark-color);
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 5px;
+}
+
+h1 {
+    font-size: 6em;
+}
+
+footer {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2em;
+    background-color: var(--dark-color);
+    color: var(--text-color-light);
+    padding: 10px;
+    text-align: center;
+}
+
+#mapsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-area {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 1fr 8fr 4fr;
+    grid-gap: 2em;
+    padding: 2em;
+}
+
+@media screen and (max-width: 768px) {
+    .map-area {
+        display: flex;
+        flex-direction: column;
+    }
+    [id^='mapborder'] {
+        width: 80vw;
+    }
+}
+
+.map-area.odd {
+    background-color: var(--primary-color-dark);
+}
+
+.maptext {
+    text-align: left;
+    font-size: 20px;
+    color: var(--text-color-light);
+    margin-top: 10px;
+    padding-left: 1em;
+}
+.maptext p a {
+    color: var(--text-color-light);
+}
+
+.overlay {
+    background-color: black;
+    border: 1px solid black;
+    padding: 2px 5px;
+    position: absolute;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.popover {
+    background-color: var(--primary-color-dark);
+    border: 2px solid #000000;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.popover-body {
+    color: var(--text-color-light);
+}
+
+.popover-body a {
+    color: var(--text-color-light);
+}
+
+.leaflet-marker-icon {
+    color: #ff0000;
+    font-size: 24px;
+}
+.leaflet-popup {
+    background-color: #000000;
+    font-size: 12px;
+    max-width: 500px;
+    border-radius: 10px;
+}
+.leaflet-popup-content {
+    text-align: center;
+}
+
+.leaflet-popup-content img {
+    max-width: 50px;
+    border-radius: 25px;
+}
