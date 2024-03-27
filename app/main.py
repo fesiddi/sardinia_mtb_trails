@@ -6,9 +6,9 @@ from fastapi.exceptions import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from app.segments import get_segment, get_segment_raw_data, segment_ids_map
-from app.segments_stats import fetch_and_write_segments_stats
-from app.trail_areas_data import trail_areas_data
+from .segments import get_segment, get_segment_raw_data, segment_ids_map
+from .segments_stats import fetch_and_write_segments_stats
+from .trail_areas_data import trail_areas_data
 
 load_dotenv()
 

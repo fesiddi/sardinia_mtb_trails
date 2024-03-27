@@ -98,10 +98,10 @@ def clean_segment(segment):
         "local_legend": segment.get("local_legend"),
         "star_count": segment.get("star_count"),
         "effort_count": segment.get("effort_count"),
-        "map": segment.get("map"),
-        "polyline": segment.get("map", {}).get("polyline"),
         "athlete_count": segment.get("athlete_count"),
         "kom": segment.get("xoms", {}).get("kom"),
+        "map": segment.get("map"),
+        "polyline": segment.get("map", {}).get("polyline"),
     }
 
 
