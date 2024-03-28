@@ -38,6 +38,12 @@ footer {
     text-align: center;
 }
 
+footer a {
+    color: var(--text-color-light);
+    font-style: normal;
+    text-decoration: none;
+}
+
 #mapsContainer {
     display: flex;
     flex-direction: column;
