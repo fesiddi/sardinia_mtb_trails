@@ -61,7 +61,7 @@ export const addPolylineLayers = (map, segments) => {
         const latlngs = decode(polyline);
         const decodedPolyline = createPolyline(segment, latlngs);
 
-        decodedPolyline.setStyle(createPolylineStyle());
+        decodedPolyline.setStyle(createPolylineStyle(segment));
 
         const polylineLayer = createLayer([decodedPolyline]);
 
@@ -85,13 +85,17 @@ const createMarkerStyle = () =>
         }),
     });
 
-const createPolylineStyle = () =>
-    new ol.style.Style({
+const createPolylineStyle = (segment) => {
+    let redColor = 'rgba(255, 0, 0, 0.8)';
+    let purpleColor = 'rgba(128, 0, 128, 0.8)';
+    let color = segment.average_grade > 0 ? purpleColor : redColor; // change color based on average_grade
+    return new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: 'red',
+            color: color,
             width: 3,
         }),
     });
+};
 
 const createPolyline = (segment, latlngs) =>
     new ol.Feature({

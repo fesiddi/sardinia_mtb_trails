@@ -26,7 +26,7 @@ templates = Jinja2Templates(directory="app/static/templates")
 
 
 @app.get("/")
-async def segment_list(request: Request):
+async def home_route(request: Request):
     return templates.TemplateResponse(
         "index.html", {"request": request, "trail_areas_data": trail_areas_data}
     )

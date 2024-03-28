@@ -12,6 +12,14 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "28156996": "Devallada de Tore",
         "24535220": "Okaw completo",
         "11451094": "Catorcio",
+        "11347908": "Antenne",
+        "2477066": "Salita Sassaia Murone",
+        "3717360": "Salita ingresso Parco",
+        "22878074": "Salita Timidone Corta",
+        "10681542": "Salita Timidone Lunga",
+        "19944639": "Salita Principale punta giglio",
+        "10337227": "Salita poltagre",
+        "11913735": "Sassaia punta giglio"
     },
     "baunei": {
         "35663742": "PS1 2024",

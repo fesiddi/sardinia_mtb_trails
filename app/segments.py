@@ -56,6 +56,7 @@ def clean_segment(segment):
     return {
         "name": segment.get("name"),
         "id": segment.get("id"),
+        "average_grade": segment.get("average_grade"),
         "start_lat": segment.get("start_latlng", [None, None])[0],
         "start_lng": segment.get("start_latlng", [None, None])[1],
         "end_lat": segment.get("end_latlng", [None, None])[0],
