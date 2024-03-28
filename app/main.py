@@ -6,8 +6,9 @@ from fastapi.exceptions import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from .segments import get_segment, get_segment_raw_data, segment_ids_map
-from .segments_stats import fetch_and_write_segments_stats
+from .segment_ids import segment_ids_dict
+from .segments import get_segment, get_segment_raw_data
+from .segments_stats import fetch_and_write_segments_stats, get_effort_count_change_for_last_x_days
 from .trail_areas_data import trail_areas_data
 
 load_dotenv()
@@ -32,7 +33,7 @@ async def segment_list(request: Request):
 @app.get("/segments/{location}")
 async def segments_location(location):
     """Get all mapped segments for a specific location."""
-    segment_ids = segment_ids_map.get(location)
+    segment_ids = segment_ids_dict.get(location)
 
     if not segment_ids:
         raise HTTPException(status_code=404, detail="Location not found")
@@ -46,11 +47,20 @@ async def raw_segment(segment_id):
     return get_segment_raw_data(segment_id)
 
 
-@app.get("/fetch_segment_stats")
-async def fetch_segment_stats_route():
+@app.get("/effort_change/{segment_id}")
+async def effort_change(segment_id):
+    """Get effort change for a specific segment."""
+    result = get_effort_count_change_for_last_x_days(segment_id)
+    if result is None:
+        return {"message": "No data available for this segment"}
+    return result
+
+
+@app.get("/update_segment_stats")
+async def update_segment_stats():
     try:
         fetch_and_write_segments_stats()
     except Exception as e:
         return {"message": f"Error fetching segment stats: {e}"}
 
-    return {"message": "Segment stats fetched successfully"}
+    return {"message": "Segment stats updated successfully"}
