@@ -34,21 +34,22 @@ def get_segment(segment_id: str) -> Dict[str, Any]:
     return cleaned_segment
 
 
-def refresh_token():
-    auth_request = requests.post(
-        f"https://www.strava.com/api/v3/oauth/token",
-        data={
-            "client_id": os.getenv("STRAVA_CLIENT_ID"),
-            "client_secret": os.getenv("STRAVA_CLIENT_SECRET"),
-            "grant_type": "refresh_token",
-            "refresh_token": os.getenv("STRAVA_REFRESH_TOKEN"),
-        },
+def get_segment_raw_data(segment_id: str):
+    global strava_access_token
+    headers = {"Authorization": f"Bearer {strava_access_token}"}
+    response = requests.get(
+        f"https://www.strava.com/api/v3/segments/{segment_id}", headers=headers
     )
-    if auth_request.status_code != 200:
-        raise HTTPException(
-            status_code=auth_request.status_code, detail=auth_request.json()
+    if response.status_code == 401:
+        auth_request = refresh_token()
+        strava_access_token = auth_request.json().get("access_token")
+        headers = {"Authorization": f"Bearer {strava_access_token}"}
+        response = requests.get(
+            f"https://www.strava.com/api/v3/segments/{segment_id}", headers=headers
         )
-    return auth_request
+    elif response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail=response.json())
+    return response.json()
 
 
 def clean_segment(segment):
@@ -69,19 +70,19 @@ def clean_segment(segment):
     }
 
 
-def get_segment_raw_data(segment_id: str):
-    global strava_access_token
-    headers = {"Authorization": f"Bearer {strava_access_token}"}
-    response = requests.get(
-        f"https://www.strava.com/api/v3/segments/{segment_id}", headers=headers
+def refresh_token():
+    auth_request = requests.post(
+        f"https://www.strava.com/api/v3/oauth/token",
+        data={
+            "client_id": os.getenv("STRAVA_CLIENT_ID"),
+            "client_secret": os.getenv("STRAVA_CLIENT_SECRET"),
+            "grant_type": "refresh_token",
+            "refresh_token": os.getenv("STRAVA_REFRESH_TOKEN"),
+        },
     )
-    if response.status_code == 401:
-        auth_request = refresh_token()
-        strava_access_token = auth_request.json().get("access_token")
-        headers = {"Authorization": f"Bearer {strava_access_token}"}
-        response = requests.get(
-            f"https://www.strava.com/api/v3/segments/{segment_id}", headers=headers
+    if auth_request.status_code != 200:
+        raise HTTPException(
+            status_code=auth_request.status_code, detail=auth_request.json()
         )
-    elif response.status_code != 200:
-        raise HTTPException(status_code=response.status_code, detail=response.json())
-    return response.json()
+    return auth_request
+
