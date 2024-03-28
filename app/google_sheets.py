@@ -1,11 +1,9 @@
-import logging
 from collections import defaultdict
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
+from .logger import logger
 
 
 class GoogleSheets:
@@ -13,7 +11,7 @@ class GoogleSheets:
         self.client, self.sheet = self.authorize_and_open_sheet()
 
     def authorize_and_open_sheet(self):
-        logging.info("Authorizing and opening Google Sheet...")
+        logger.info("Authorizing and opening Google Sheet...")
         scope = [
             "https://spreadsheets.google.com/feeds",
             "https://www.googleapis.com/auth/drive",
@@ -27,17 +25,17 @@ class GoogleSheets:
             sheet = client.open("My Test Sheet").sheet1
             return client, sheet
         except gspread.exceptions.SpreadsheetNotFound:
-            logging.error("Spreadsheet not found.")
+            logger.error("Spreadsheet not found.")
             return client, None
         except gspread.exceptions.APIError:
-            logging.error("API error occurred.")
+            logger.error("API error occurred.")
             return client, None
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            logger.error(f"An error occurred: {e}")
             return client, None
 
     def format_data_for_sheet(self, result):
-        logging.info("Formatting data for Google Sheet...")
+        logger.info("Formatting data for Google Sheet...")
         formatted_data = defaultdict(list)
         for i, segment_stats in enumerate(result, start=2):
             formatted_data[str(i)].append(segment_stats["id"])
@@ -47,7 +45,7 @@ class GoogleSheets:
         return formatted_data
 
     def update_google_sheet(self, formatted_data):
-        logging.info("Updating Google Sheet...")
+        logger.info("Updating Google Sheet...")
         if formatted_data:
             range_start = 2
             range_end = len(formatted_data) + 1
@@ -59,6 +57,6 @@ class GoogleSheets:
                     col_num = cell.col
                     cell.value = formatted_data[str(row_num)][col_num - 1]
                 self.sheet.update_cells(cell_list)
-                logging.info("Google Sheet updated successfully.")
+                logger.info("Google Sheet updated successfully.")
             except Exception as e:
-                logging.error(f"An error occurred while updating Google Sheet: {e}")
+                logger.error(f"An error occurred while updating Google Sheet: {e}")
