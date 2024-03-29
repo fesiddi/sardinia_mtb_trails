@@ -34,6 +34,29 @@ trail_areas_data = [
         ],
     },
     {
+        "name": "Carbonia",
+        "s_name": "carbonia",
+        "description": "Carbonia is a small town located in the south of Sardinia, Italy. It is known for its "
+        "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
+        "town, there are many trails, perfect for mountain biking, hiking, and trail running.",
+        "difficulty": "Easy to moderate",
+        "local_riders": [
+            {"name": "Andrea", "strava_id": "116031"},
+            {"name": "Francesco", "strava_id": "116031"},
+        ],
+    },
+    {
+        "name": "Gavoi",
+        "s_name": "gavoi",
+        "description": "Gavoi is a small town located in the center of Sardinia, Italy. It is known for its beautiful "
+        "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
+        "are many trails, perfect for mountain biking, hiking, and trail running.",
+        "difficulty": "Easy to moderate",
+        "local_riders": [
+            {"name": "Giuseppe", "strava_id": "4488711"},
+        ],
+    },
+    {
         "name": "Monte Arci",
         "s_name": "marci",
         "description": "Monte Arci is located in the south of Sardinia near Oristano, Italy. It is known for its beautiful "
@@ -42,6 +65,17 @@ trail_areas_data = [
         "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Fabrizio", "strava_id": "4488711"},
+        ],
+    },
+    {
+        "name": "Nuoro",
+        "s_name": "nuoro",
+        "description": "Nuoro is a small town located in the center of Sardinia, Italy. It is known for its beautiful "
+        "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
+        "are many trails, perfect for mountain biking, hiking, and trail running.",
+        "difficulty": "Easy to moderate",
+        "local_riders": [
+            {"name": "Giovanni", "strava_id": "4488711"},
         ],
     },
     {   

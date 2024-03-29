@@ -33,10 +33,22 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "33543696": "Spaccabraccia",
         "36150152": "Scioppino",
     },
+    "carbonia": {
+        "35669866": "Bombonera",
+        "33243466": "Voragini",
+    },
+    "gavoi": {
+        "35669866": "Bombonera",
+        "33243466": "Voragini",
+    },
     "marci": {
         "35669866": "Bombonera",
         "33243466": "Voragini",
         "36167901": "Leggendaria",
+    },
+    "nuoro": {
+        "35669866": "Bombonera",
+        "33243466": "Voragini",
     },
     "olbia": {
         "16432849": "DH Monte Pino",
