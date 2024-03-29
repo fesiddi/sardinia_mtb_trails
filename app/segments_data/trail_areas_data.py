@@ -1,6 +1,7 @@
 trail_areas_data = [
     {
         "name": "Alghero",
+        "s_name": "alghero",
         "description": "Alghero is a beautiful city located in the northwest of Sardinia, Italy. It is known for its "
         "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
         "city, there are many trails, perfect for mountain biking, hiking, and trail running.",
@@ -12,6 +13,7 @@ trail_areas_data = [
     },
     {
         "name": "Baunei",
+        "s_name": "baunei",
         "description": "Baunei is a small town located in the east of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
@@ -22,6 +24,7 @@ trail_areas_data = [
     },
     {
         "name": "Capoterra",
+        "s_name": "capoterra",
         "description": "Capoterra is a small town located in the south of Sardinia, Italy. It is known for its "
         "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
         "town, there are many trails, perfect for mountain biking, hiking, and trail running.",
@@ -32,6 +35,7 @@ trail_areas_data = [
     },
     {
         "name": "Monte Arci",
+        "s_name": "marci",
         "description": "Monte Arci is located in the south of Sardinia near Oristano, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
@@ -40,8 +44,9 @@ trail_areas_data = [
             {"name": "Fabrizio", "strava_id": "4488711"},
         ],
     },
-    {
+    {   
         "name": "Olbia",
+        "s_name": "olbia",
         "description": "Olbia is a small town located in the north of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
