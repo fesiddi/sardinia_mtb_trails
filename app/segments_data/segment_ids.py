@@ -18,8 +18,8 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "22878074": "Salita Timidone Corta",
         "10681542": "Salita Timidone Lunga",
         "19944639": "Salita Principale punta giglio",
-        "10337227": "Salita poltagre",
-        "11913735": "Sassaia punta giglio"
+        "10337227": "Salita poltagra",
+        "11913735": "discesa Sassaia punta giglio"
     },
     "baunei": {
         "35663742": "PS1 2024",

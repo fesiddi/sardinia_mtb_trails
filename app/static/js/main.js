@@ -1,6 +1,7 @@
 import { initMap, setupPopup } from './map-utils.js';
 
 async function fetchAndInitializeMap(segmentUrl, mapId) {
+
     const response = await fetch(segmentUrl);
     const data = await response.json();
     const segments = data;
@@ -12,11 +13,11 @@ async function fetchAndInitializeMap(segmentUrl, mapId) {
 }
 
 async function initialize() {
-    await fetchAndInitializeMap('/segments/alghero', 'map1');
-    await fetchAndInitializeMap('/segments/baunei', 'map2');
-    await fetchAndInitializeMap('/segments/capoterra', 'map3');
-    await fetchAndInitializeMap('/segments/marci', 'map4');
-    await fetchAndInitializeMap('/segments/olbia', 'map5');
+    await fetchAndInitializeMap('/location/alghero', 'map1');
+    await fetchAndInitializeMap('/location/baunei', 'map2');
+    await fetchAndInitializeMap('/location/capoterra', 'map3');
+    await fetchAndInitializeMap('/location/marci', 'map4');
+    await fetchAndInitializeMap('/location/olbia', 'map5');
 }
 
 initialize();

@@ -7,7 +7,6 @@ from fastapi.exceptions import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.segments_data.segment_ids import segment_ids_dict
-from app.services.strava_api import StravaApi
 from app.services.segments_repository import SegmentsRepository
 from app.segments_data.trail_areas_data import trail_areas_data
 from app.db.database import Database, DatabaseConnectionError
@@ -25,7 +24,6 @@ app.mount(
 )
 templates = Jinja2Templates(directory="app/static/templates")
 
-strava_api = StravaApi()
 config = Config()
 
 
@@ -40,20 +38,16 @@ async def home_route(request: Request):
 async def segments_location(location):
     """Get all mapped segments for a specific location."""
     segment_ids = segment_ids_dict.get(location)
-    print(segment_ids)
     if not segment_ids:
         raise HTTPException(status_code=404, detail="Location not found")
     try:
         db = Database(config)
         segments_repository = SegmentsRepository(db, config)
-        segments = [segments_repository.get_segment_data(segment_id) for segment_id in segment_ids.keys()]
+        segments = [segments_repository.get_cleaned_segment(segment_id) for segment_id in segment_ids.keys()]
         return segments
+
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
-
-
-
-
 
 
 @app.get("/effort_change/{segment_id}")
