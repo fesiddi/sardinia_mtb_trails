@@ -34,12 +34,16 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "36150152": "Scioppino",
     },
     "carbonia": {
-        "35669866": "Bombonera",
-        "33243466": "Voragini",
+        "12333786": "DH Monte Leone",
+        "12171561": "PS Tritone d",
+        "13986404": "Ps1 LA VECCHIA DH",
+        "15008043": "prima salita gara carbonia"
     },
     "gavoi": {
-        "35669866": "Bombonera",
-        "33243466": "Voragini",
+        "16182576": "chizzu e noli",
+        "31477685": "ps1 2022",
+        "18333144": "cancello+tittione+andria",
+        "31081958": "mascalzone trail"
     },
     "marci": {
         "35669866": "Bombonera",
@@ -47,8 +51,12 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "36167901": "Leggendaria",
     },
     "nuoro": {
-        "35669866": "Bombonera",
-        "33243466": "Voragini",
+        "13682199": "murrone",
+        "24196646": "su 'e bitti 2",
+        "16664219": "meditativo",
+        "24770162": "casa del vescovo",
+        "28043315": "toboga 2",
+        "7696074": "La Solitudine - Monte Ortobene",
     },
     "olbia": {
         "16432849": "DH Monte Pino",
