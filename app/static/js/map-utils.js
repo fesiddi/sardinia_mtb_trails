@@ -2,36 +2,61 @@ const TILE_SERVER_URL =
     'https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=52c2b5d8de3e4f1ab03dc1e108cd1a3d';
 
 export const initMap = (firstSegmentLng, firstSegmentLat, target, segments) => {
+    const bounds = calculateBounds(segments);
+    const extent = calculateExtent(bounds);
+
     const map = new ol.Map({
         target: target,
         layers: [createTileLayer()],
         view: new ol.View({
             center: ol.proj.fromLonLat([firstSegmentLng, firstSegmentLat]),
             zoom: 13,
+            extent: ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857'),
         }),
     });
 
-    map.once('postrender', () => addPolylineLayers(map, segments));
-    fitMapToSegments(map, segments);
+    map.once('postrender', () => {
+        addPolylineLayers(map, segments);
+        fitMapToSegments(map, segments);
+    });
 
     return map;
 };
 
-const calculateBounds = (segments) =>
-    segments.reduce(
-        (bounds, { start_lng, start_lat, end_lng, end_lat }) => [
-            Math.min(bounds[0], start_lng, end_lng),
-            Math.min(bounds[1], start_lat, end_lat),
-            Math.max(bounds[2], start_lng, end_lng),
-            Math.max(bounds[3], start_lat, end_lat),
-        ],
-        [
-            segments[0].start_lng,
-            segments[0].start_lat,
-            segments[0].end_lng,
-            segments[0].end_lat,
-        ]
-    );
+const calculateExtent = (bounds, factor = 10, minSize = 1) => {
+    const centerX = (bounds[0] + bounds[2]) / 2;
+    const centerY = (bounds[1] + bounds[3]) / 2;
+
+    let width = (bounds[2] - bounds[0]) * factor;
+    let height = (bounds[3] - bounds[1]) * factor;
+
+    // Ensure the width and height are at least minSize
+    width = Math.max(width, minSize);
+    height = Math.max(height, minSize);
+
+    return [
+        centerX - width / 2,
+        centerY - height / 2,
+        centerX + width / 2,
+        centerY + height / 2,
+    ];
+};
+
+const calculateBounds = (segments) => {
+    let minLng = segments[0].start_lng;
+    let minLat = segments[0].start_lat;
+    let maxLng = segments[0].end_lng;
+    let maxLat = segments[0].end_lat;
+
+    segments.forEach(({ start_lng, start_lat, end_lng, end_lat }) => {
+        minLng = Math.min(minLng, start_lng, end_lng);
+        minLat = Math.min(minLat, start_lat, end_lat);
+        maxLng = Math.max(maxLng, start_lng, end_lng);
+        maxLat = Math.max(maxLat, start_lat, end_lat);
+    });
+
+    return [minLng, minLat, maxLng, maxLat];
+};
 
 const fitMapToSegments = (map, segments) => {
     let bounds = calculateBounds(segments);
