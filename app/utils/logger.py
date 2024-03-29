@@ -28,11 +28,6 @@ class Logger:
             console_handler.setFormatter(formatter)
             Logger.logger.addHandler(console_handler)
 
-            # FileHandler logs to a file
-            file_handler = logging.FileHandler('logfile.log')
-            file_handler.setFormatter(formatter)
-            Logger.logger.addHandler(file_handler)
-
     @staticmethod
     def info(message):
         Logger.logger.info(message)
