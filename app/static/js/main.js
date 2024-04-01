@@ -20,6 +20,14 @@ async function fetchAndInitializeMap(segmentUrl, mapId) {
         return;
     }
 
+    if (data.some((element) => element === null)) {
+        console.error(`Error: one or more elements in the data are null`);
+        return;
+    }
+
+    console.log(`Initializing map '${mapId}' with ${data.length} segments`);
+    console.log(data);
+
     const segments = data;
     const lat = data[0]['start_lat'];
     const lng = data[0]['start_lng'];

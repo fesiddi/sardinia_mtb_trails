@@ -1,6 +1,4 @@
-from typing import Dict
-
-segment_ids_dict: Dict[str, Dict[str, str]] = {
+segment_ids_dict = {
     "alghero": {
         "28448435": "Merenderos ps1",
         "28448438": "Maranatz ps2",
@@ -9,8 +7,8 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "28448465": "Mistral ps5",
         "28448470": "Easy peasy ps6",
         "33922489": "Parabellum",
-        "28156996": "Devallada de Tore",
-        "24535220": "Okaw completo",
+        "27894086": "Tottoi",
+        "34193275": "Revolver",
         "11451094": "Catorcio",
         "11347908": "Antenne",
         "2477066": "Salita Sassaia Murone",
@@ -63,4 +61,11 @@ segment_ids_dict: Dict[str, Dict[str, str]] = {
         "14148006": "Tornanti Ps3",
         "14087488": "PS1 2018",
     },
+}
+
+test_segment_ids = {
+    "test_location": {
+        "123456": "Test Segment 1",
+        "654321": "Test Segment 2",
+    }
 }

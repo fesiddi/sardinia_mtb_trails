@@ -41,8 +41,7 @@ trail_areas_data = [
         "town, there are many trails, perfect for mountain biking, hiking, and trail running.",
         "difficulty": "Easy to moderate",
         "local_riders": [
-            {"name": "Andrea", "strava_id": "116031"},
-            {"name": "Francesco", "strava_id": "116031"},
+            {"name": "Davide", "strava_id": "8573339"},
         ],
     },
     {
@@ -53,7 +52,7 @@ trail_areas_data = [
         "are many trails, perfect for mountain biking, hiking, and trail running.",
         "difficulty": "Easy to moderate",
         "local_riders": [
-            {"name": "Giuseppe", "strava_id": "4488711"},
+            {"name": "Giuseppe", "strava_id": "7359860"},
         ],
     },
     {
@@ -75,7 +74,7 @@ trail_areas_data = [
         "are many trails, perfect for mountain biking, hiking, and trail running.",
         "difficulty": "Easy to moderate",
         "local_riders": [
-            {"name": "Giovanni", "strava_id": "4488711"},
+            {"name": "Francesco", "strava_id": "13846867"},
         ],
     },
     {   
