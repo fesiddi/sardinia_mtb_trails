@@ -80,8 +80,8 @@ class SegmentsRepository:
                 efforts_last_x_days, key=lambda x: datetime.strptime(x.get("fetch_date"), Config.DATE_FORMAT)
             )
             if len(efforts_last_x_days) >= 2:
-                initial_effort_count = efforts_last_x_days[0].effort_count
-                final_effort_count = efforts_last_x_days[-1].effort_count
+                initial_effort_count = efforts_last_x_days[0].get("effort_count")
+                final_effort_count = efforts_last_x_days[-1].get("effort_count")
                 effort_count_change = final_effort_count - initial_effort_count
                 return effort_count_change
         return None
