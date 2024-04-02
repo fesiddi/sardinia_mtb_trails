@@ -76,7 +76,6 @@ function handleMapClick(evt, map, popup) {
 }
 
 function generatePopupContent(feature) {
-    console.log(feature.getProperties());
     const { name, id, kom, athlete_count, local_legend } =
         feature.getProperties();
 
