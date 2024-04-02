@@ -21,7 +21,13 @@
     <script>
     const data = {{ data|tojson }};
 
-    for (const [segmentId, segmentData] of Object.entries(data)) {
+    const sortedData = Object.entries(data).sort((a, b) => {
+    const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
+    const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
+    return totalEffortsB - totalEffortsA;  // Sort in descending order
+});
+
+    for (const [segmentId, segmentData] of sortedData) {
         const container = document.createElement('div');
         container.className = 'chart-container';
         const canvas = document.createElement('canvas');
