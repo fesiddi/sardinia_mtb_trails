@@ -76,13 +76,13 @@ function handleMapClick(evt, map, popup) {
 }
 
 function generatePopupContent(feature) {
-    const { name, star_count, kom, athlete_count, local_legend, segmentId } =
+    console.log(feature.getProperties());
+    const { name, id, kom, athlete_count, local_legend } =
         feature.getProperties();
 
     return `
-    <h5><strong>${name}</strong></h5>
+    <h4><strong>${name}</strong></h4>
     <p><strong>KOM: </strong>${kom}</p>
-    <p><strong>Stars Count: </strong>${star_count}</p>
     <p><strong>Athletes Count: </strong>${athlete_count}</p>
     ${
         local_legend && local_legend.title && local_legend.athlete_id
@@ -90,6 +90,6 @@ function generatePopupContent(feature) {
             : ''
     }
     <p>${local_legend ? local_legend.effort_description : ''}</p>
-    <p><a href="https://www.strava.com/segments/${segmentId}">View Segment on Strava</a></p>
+    <p><a href="https://www.strava.com/segments/${id}">View Segment on Strava</a></p>
   `;
 }
