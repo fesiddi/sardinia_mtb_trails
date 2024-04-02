@@ -53,6 +53,16 @@ footer a {
     text-decoration: none;
 }
 
+a.instalink {
+    text-decoration: none;
+}
+
+i {
+    color: var(--text-color-light);
+    font-size: 32px;
+    text-decoration: none;
+}
+
 #mapsContainer {
     display: flex;
     flex-direction: column;

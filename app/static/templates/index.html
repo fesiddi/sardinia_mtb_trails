@@ -29,6 +29,10 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
         <script src="https://openlayers.org/en/v6.5.0/build/ol.js"></script>
@@ -44,12 +48,16 @@
                 class="map-area {% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %}"
             >
                 {{ macros.map_area(loop.index, area.name, area.description,
-                area.difficulty, area.local_riders) }}
+                area.local_riders, area.instagram) }}
             </div>
             {% endfor %}
         </div>
         <footer>
-            <p>Copyright &copy; 2024 <a href="https://github.com/fesiddi">Federico Siddi</a>. All rights reserved.</p>
+            <p>
+                Copyright &copy; 2024
+                <a href="https://github.com/fesiddi">Federico Siddi</a>. All
+                rights reserved.
+            </p>
         </footer>
         <script src="static/js/main.js" type="module"></script>
     </body>
