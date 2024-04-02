@@ -61,4 +61,4 @@ async def effort_change(segment_id):
         return {"message": f"Error fetching segment stats: {e}"}
     if result is None:
         return {"message": "No data available for this segment"}
-    return result
+    return {"last_7_days_efforts": result}
