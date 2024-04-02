@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.exceptions import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -24,6 +24,16 @@ templates = Jinja2Templates(directory="app/static/templates")
 
 config = Config()
 
+def get_db():
+    try:
+        db = Database(config)
+        return db
+    except DatabaseConnectionError:
+        raise HTTPException(status_code=500, detail="Database connection error")
+
+def get_segments_repository(db: Database = Depends(get_db)):
+    return SegmentsRepository(db, config)
+
 
 @app.get("/")
 async def home_route(request: Request):
@@ -33,11 +43,9 @@ async def home_route(request: Request):
 
 
 @app.get("/segments")
-async def segments():
+async def segments(segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get all segments."""
     try:
-        db = Database(config)
-        segments_repository = SegmentsRepository(db, config)
         found_segments = segments_repository.get_all_segments()
         return found_segments
     except DatabaseConnectionError as e:
@@ -45,14 +53,12 @@ async def segments():
 
 
 @app.get("/location/{location}")
-async def segments_location(location):
+async def segments_location(location, segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get all mapped segments for a specific location."""
     segment_ids = segment_ids_dict.get(location)
     if not segment_ids:
         raise HTTPException(status_code=404, detail="Location not found")
     try:
-        db = Database(config)
-        segments_repository = SegmentsRepository(db, config)
         segments = [segments_repository.get_cleaned_segment(segment_id) for segment_id in segment_ids.keys()]
         return segments
 
@@ -61,11 +67,9 @@ async def segments_location(location):
 
 
 @app.get("/effort_change/{segment_id}")
-async def effort_change(segment_id: str, days: int = 7):
+async def effort_change(segment_id: str, days: int = 7, segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort change for a specific segment over the last x days (default 7)."""
     try:
-        db = Database(config)
-        segments_repository = SegmentsRepository(db, config)
         result = segments_repository.get_effort_count_change_for_last_x_days(segment_id, days)
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
@@ -75,11 +79,9 @@ async def effort_change(segment_id: str, days: int = 7):
 
 
 @app.get("/effort_counts/{segment_id}")
-async def effort_counts(segment_id: str, start_date: str, end_date: str):
+async def effort_counts(segment_id: str, start_date: str, end_date: str,segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort counts for a specific segment within a date range."""
     try:
-        db = Database(config)
-        segments_repository = SegmentsRepository(db, config)
         result = segments_repository.get_effort_counts_for_date_range(segment_id, start_date, end_date)
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
@@ -89,20 +91,18 @@ async def effort_counts(segment_id: str, start_date: str, end_date: str):
 
 
 @app.get("/segments_stats/{location}")
-async def segments_stats(request: Request, location: str, start_date: str, end_date: str):
+async def segments_stats(request: Request, location: str, start_date: str, end_date: str, segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort counts for all segments in a specific location within a date range."""
     segment_ids = segment_ids_dict.get(location)
     if not segment_ids:
         raise HTTPException(status_code=404, detail="Location not found")
     try:
-        db = Database(config)
-        segments_repository = SegmentsRepository(db, config)
         data = {}
         for segment_id in segment_ids.keys():
             segment = segments_repository.get_segment(segment_id)
             result = segments_repository.get_effort_counts_for_date_range(segment_id, start_date, end_date)
             if result is not None:
                 data[segment_id] = {"name": segment.name, "efforts": result}
-        return templates.TemplateResponse("stats.html", {"request": request, "data": data})
+        return templates.TemplateResponse("stats.html", {"request": request, "location": location, "data": data})
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
