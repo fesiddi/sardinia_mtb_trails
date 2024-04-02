@@ -11,6 +11,10 @@
             rel="stylesheet"
             href="{{ request.url_for('static', path='css/styles.css') }}"
         />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        />
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
@@ -48,7 +52,6 @@
                         datasets: [{
                             label: 'Efforts',
                             data: effortCounts,
-
                             fill: false,
                             borderColor: lineColor,
                             backgroundColor: lineColor,
@@ -67,8 +70,12 @@
                             display: true,
                             color: textColor,
                             text: (ctx) => `${segmentData.name}`,
-                            }
+                            font: {
+                                size: 20,
+                                family: 'Montserrat',
+                            },
                         },
+                    },
                         scales: {
                             x: {
                                 display: true,
