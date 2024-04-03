@@ -3,8 +3,7 @@ from typing import List, Any, Optional
 from datetime import datetime, timedelta
 from app.utils.config import Config
 from app.utils.logger import Logger
-from app.models.Segment import Segment
-from app.models.CleanedSegment import CleanedSegment
+from app.models.EnhancedSegment import EnhancedSegment
 from app.models.SegmentEfforts import SegmentEfforts, Effort
 
 
@@ -13,28 +12,27 @@ class SegmentsRepository:
         self.config = config
         self.db = db
 
-    def get_segment(self, segment_id: str) -> Optional[Segment]:
+    def get_segment(self, segment_id: str) -> Optional[EnhancedSegment]:
         """Get segment data for a specific segment_id."""
         Logger.debug(f"Getting segment data for segment_id: {segment_id}")
         result = self.db.find_one(self.config.SEGMENTS_COLL_NAME, {"id": int(segment_id)})
         if result:
-            return Segment(**result)
+            return EnhancedSegment(**result)
         return None
 
-    def get_all_segments(self) -> List[Segment]:
+    def get_all_segments(self) -> List[EnhancedSegment]:
         """Get all segments from the database."""
         Logger.debug("Getting all segments")
         result = self.db.find_many(self.config.SEGMENTS_COLL_NAME, {})
-        segments = [Segment(**doc) for doc in result]
+        segments = [EnhancedSegment(**segment) for segment in result]
         return segments
 
-    def get_cleaned_segment(self, segment_id: str) -> CleanedSegment | None:
-        """Get cleaned segment data for a specific segment_id."""
-        Logger.debug(f"Getting cleaned segment data for segment_id: {segment_id}")
-        segment = self.get_segment(segment_id)
-        if segment:
-            return CleanedSegment.from_segment(segment)
-        return None
+    def get_all_segments_for_area(self, area: str) -> List[EnhancedSegment]:
+        """Get all segments for a specific area."""
+        Logger.debug(f"Getting all segments for area: {area}")
+        result = self.db.find_many(self.config.SEGMENTS_COLL_NAME, {"trail_area": area})
+        segments = [EnhancedSegment(**segment) for segment in result]
+        return segments
 
     def get_segment_efforts(self, segment_id: str) -> List[Effort] | None:
         """Get segment effort data for a specific segment_id."""

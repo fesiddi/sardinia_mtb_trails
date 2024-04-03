@@ -1,5 +1,5 @@
-from pydantic import BaseModel, ValidationError, field_validator, model_validator
-from typing import Optional, Dict, List
+from pydantic import BaseModel, model_validator
+from typing import Optional, Dict
 
 
 class LatLng(BaseModel):
@@ -45,7 +45,7 @@ class Map(BaseModel):
     resource_state: int
 
 
-class Segment(BaseModel):
+class RawSegment(BaseModel):
     id: int
     resource_state: int
     name: str
