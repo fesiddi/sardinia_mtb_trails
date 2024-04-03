@@ -1,12 +1,14 @@
 import os
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.segments_data.trail_areas_data import trail_areas_data
+
+from app.services.areas_repository import AreasRepository
 from app.utils.config import Config
 from app.routes import segments, efforts, trail_areas
+from app.services.areas_service import get_areas_repository
 
 load_dotenv()
 
@@ -23,10 +25,14 @@ config = Config()
 
 
 @app.get("/")
-async def home_route(request: Request):
-    return templates.TemplateResponse(
-        "index.html", {"request": request, "trail_areas_data": trail_areas_data}
-    )
+async def home_route(request: Request, areas_repository: AreasRepository = Depends(get_areas_repository)):
+    try:
+        trail_areas_data = areas_repository.get_all_areas()
+        return templates.TemplateResponse(
+            "index.html", {"request": request, "trail_areas_data": trail_areas_data}
+        )
+    except Exception as e:
+        return {"message": f"Error loading home page: {e}"}
 
 
 app.include_router(segments.router, tags=["segments"])
