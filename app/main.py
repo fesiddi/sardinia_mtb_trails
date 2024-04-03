@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.segments_data.trail_areas_data import trail_areas_data
 from app.utils.config import Config
-from app.routes import segments, efforts
+from app.routes import segments, efforts, trail_areas
 
 load_dotenv()
 
@@ -31,3 +31,4 @@ async def home_route(request: Request):
 
 app.include_router(segments.router, tags=["segments"])
 app.include_router(efforts.router, tags=["efforts"])
+app.include_router(trail_areas.router, tags=["trail_areas"])

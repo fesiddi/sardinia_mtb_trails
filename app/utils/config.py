@@ -5,6 +5,7 @@ class Config:
     STRAVA_API_URL = "https://www.strava.com/api/v3"
     EFFORT_COLL_NAME = "effort_stats"
     SEGMENTS_COLL_NAME = "segments"
+    AREAS_COLL_NAME = "areas"
     DATE_FORMAT = "%d-%m-%Y"
 
     def __init__(self):

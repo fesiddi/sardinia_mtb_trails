@@ -58,6 +58,10 @@ class Database:
     def find_many(self, collection_name, query):
         return self.db[collection_name].find(query)
 
+    def delete_one(self, collection_name, query):
+        result = self.db[collection_name].delete_one(query)
+        return result.deleted_count > 0
+
     def close_connection(self):
         self.client.close()
         Logger.debug("Connection to MongoDB closed")
