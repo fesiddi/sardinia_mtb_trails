@@ -6,11 +6,9 @@ from app.segments_data.segment_ids import segment_ids_dict
 from app.services.segments_service import get_segments_repository
 from fastapi.templating import Jinja2Templates
 
-
 router = APIRouter()
 
 templates = Jinja2Templates(directory="app/static/templates")
-
 
 
 @router.get("/efforts/{location}")
@@ -32,8 +30,10 @@ async def segments_stats(request: Request, location: str, start_date: str, end_d
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
 
+
 @router.get("/efforts/{segment_id}")
-async def effort_change(segment_id: str, days: int = 7, segments_repository: SegmentsRepository = Depends(get_segments_repository)):
+async def effort_change(segment_id: str, days: int = 7,
+                        segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort change for a specific segment over the last x days (default 7).
     Example: /efforts/33922489?days=5 or with default 7 days /efforts/33922489"""
     try:
@@ -57,6 +57,3 @@ async def effort_counts(segment_id: str, start_date: str, end_date: str,
     if result is None:
         return {"message": "No data available for this segment in the given date range"}
     return {"effort_counts": result}
-
-
-

@@ -1,12 +1,16 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional
-from app.models.Segment import Segment, Map, LocalLegend
+from app.models.RawSegment import RawSegment, Map, LocalLegend
 
 
-class CleanedSegment(BaseModel):
+class EnhancedSegment(BaseModel):
     name: str
+    alt_name: str
     id: int
+    trail_area: str
     average_grade: float
+    difficulty: Optional[str] = ''
+    popularity: Optional[int] = 0
     start_lat: Optional[float]
     start_lng: Optional[float]
     end_lat: Optional[float]
@@ -20,10 +24,12 @@ class CleanedSegment(BaseModel):
     polyline: Optional[str]
 
     @classmethod
-    def from_segment(cls, segment: Segment):
+    def from_segment(cls, segment: RawSegment, trail_area: str):
         return cls(
             name=segment.name,
+            alt_name=segment.name,
             id=segment.id,
+            trail_area=trail_area,
             average_grade=segment.average_grade,
             start_lat=segment.start_latlng.lat,
             start_lng=segment.start_latlng.lng,
