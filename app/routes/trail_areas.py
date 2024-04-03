@@ -4,7 +4,6 @@ from app.models.TrailArea import TrailArea
 from app.services.areas_repository import AreasRepository
 from app.db.database import DatabaseConnectionError
 from app.services.areas_service import get_areas_repository
-from app.segments_data.trail_areas_data import trail_areas_data as areas
 from app.utils.logger import Logger
 
 router = APIRouter()
