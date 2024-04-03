@@ -5,7 +5,6 @@ trail_areas_data = [
         "description": "Alghero is a beautiful city located in the northwest of Sardinia, Italy. It is known for its "
         "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
         "city, there are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Carsten", "strava_id": "16631034"},
             {"name": "Gabriele", "strava_id": "13565577"},
@@ -18,7 +17,6 @@ trail_areas_data = [
         "description": "Baunei is a small town located in the east of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Moderate to hard",
         "local_riders": [
             {"name": "Efisio", "strava_id": "9869628"},
         ],
@@ -30,7 +28,6 @@ trail_areas_data = [
         "description": "Capoterra is a small town located in the south of Sardinia, Italy. It is known for its "
         "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
         "town, there are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Matteo", "strava_id": "6900592"},
         ],
@@ -42,7 +39,6 @@ trail_areas_data = [
         "description": "Carbonia is a small town located in the south of Sardinia, Italy. It is known for its "
         "beautiful beaches, its historical center, and its natural parks. In the surroundings of the "
         "town, there are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Davide", "strava_id": "8573339"},
         ],
@@ -54,7 +50,6 @@ trail_areas_data = [
         "description": "Gavoi is a small town located in the center of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Giuseppe", "strava_id": "7359860"},
         ],
@@ -66,7 +61,6 @@ trail_areas_data = [
         "description": "Monte Arci is located in the south of Sardinia near Oristano, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Fabrizio", "strava_id": "4488711"},
         ],
@@ -78,7 +72,6 @@ trail_areas_data = [
         "description": "Nuoro is a small town located in the center of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Francesco", "strava_id": "13846867"},
         ],
@@ -90,7 +83,6 @@ trail_areas_data = [
         "description": "Olbia is a small town located in the north of Sardinia, Italy. It is known for its beautiful "
         "beaches, its historical center, and its natural parks. In the surroundings of the town, there "
         "are many trails, perfect for mountain biking, hiking, and trail running.",
-        "difficulty": "Easy to moderate",
         "local_riders": [
             {"name": "Mirko", "strava_id": "20292657"},
         ],
