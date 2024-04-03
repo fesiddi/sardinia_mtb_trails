@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Segments Stats</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="icon"
+            href="{{ request.url_for('static', path='favicon.ico') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ request.url_for('static', path='css/styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <body>
+        <div>
+            <h2>Efforts Statistics for {{location.capitalize()}} Segments</h2>
+        </div>
+        <div id="charts"></div>
+        <script>
+            const data = {{ data | tojson }};
+
+            const sortedData = Object.entries(data).sort((a, b) => {
+                const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
+                const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
+                return totalEffortsB - totalEffortsA;
+            });
+
+            for (const [segmentId, segmentData] of sortedData) {
+                const container = document.createElement('div');
+                container.className = 'chart-container';
+                const canvas = document.createElement('canvas');
+                container.appendChild(canvas);
+                document.getElementById('charts').appendChild(container);
+
+                const labels = segmentData.efforts.map(effort => effort.fetch_date);
+                const effortCounts = segmentData.efforts.map(effort => effort.effort_count_diff);
+
+                const lineColor = '#52796f'
+                const textColor = '#cad2c5'
+
+                new Chart(canvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Efforts',
+                            data: effortCounts,
+                            fill: false,
+                            borderColor: lineColor,
+                            backgroundColor: lineColor,
+                            color: lineColor,
+                            pointStyle: 'circle',
+                            pointRadius: 7,
+                            pointHoverRadius: 10,
+                            tension: 0.3,
+                            font: {
+                                family: 'Montserrat',
+                                size: 16,
+                            },
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        color: textColor,
+                        plugins: {
+                            title: {
+                            display: true,
+                            color: textColor,
+                            text: (ctx) => `${segmentData.name}`,
+                            font: {
+                                size: 20,
+                                family: 'Montserrat',
+                            },
+                        },
+                        legend: {
+                            display: false
+                        },
+                    },
+                        scales: {
+                            x: {
+                                display: true,
+                                ticks: {
+                                    color: textColor,
+                                    font: {
+                                        family: 'Montserrat',
+                                    },
+                                },
+                            },
+                            y: {
+                                display: true,
+                                ticks: {
+                                    color: textColor,
+                                    font: {
+                                        family: 'Montserrat',
+                                    },
+                                    precision: 0,
+                                },
+                            },
+                        },
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

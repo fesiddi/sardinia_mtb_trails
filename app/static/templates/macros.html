@@ -1,4 +1,4 @@
-{% macro map_area(id, name, description, difficulty, local_riders) %}
+{% macro map_area(id, name, description, local_riders, instagram) %}
 <div id="space{{ id }}"></div>
 <div id="mapborder{{ id }}" style="border: 5px solid #000000; height: 50vh">
     <div id="map{{ id }}" style="width: 100%; height: 100%"></div>
@@ -6,7 +6,6 @@
 <div class="maptext" id="maptext{{ id }}">
     <h2>{{ name }}</h2>
     <p>{{ description }}</p>
-    <p><strong>Difficulty:</strong> {{ difficulty }}</p>
     <p>
         <strong>Local Riders:</strong>
         {% for rider in local_riders %}
@@ -15,5 +14,14 @@
         >
         {% endfor %}
     </p>
+    <p>
+        {% for link in instagram %}
+        <a class="instalink" href="{{ link }}">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <span>&nbsp;</span>
+        {% endfor %}
+    </p>
 </div>
+
 {% endmacro %}

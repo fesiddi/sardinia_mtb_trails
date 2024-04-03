@@ -39,7 +39,7 @@ async function initialize() {
     for (let i = 0; i < trailAreasData.length; i++) {
         const area = trailAreasData[i];
         const mapId = `map${i + 1}`;
-        await fetchAndInitializeMap(`/location/${area.name}`, mapId);
+        await fetchAndInitializeMap(`/segments/${area.name}`, mapId);
     }
 }
 

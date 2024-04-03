@@ -6,12 +6,12 @@ client = TestClient(app)
 
 
 def test_segments_location_for_capoterra():
-    response = client.get("/location/capoterra")
+    response = client.get("/segments/capoterra")
     assert response.status_code == 200
 
 
 def test_segment_list_for_alghero():
-    response = client.get("/location/alghero")
+    response = client.get("/segments/alghero")
     assert response.status_code == 200
     segments = response.json()
     assert len(segments) == 10
