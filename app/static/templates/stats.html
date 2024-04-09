@@ -44,15 +44,29 @@
                 const canvas = document.createElement('canvas');
                 // Add the canvas to the container
                 container.appendChild(canvas);
+
+                // Define the line and text colors for the chart
+                const lineColor = '#52796f'
+                const textColor = '#cad2c5'
+
+                // Create a new anchor element for the subtitle
+                const subtitle = document.createElement('a');
+                subtitle.href = `https://strava.com/segments/${segmentData.id}`; // replace with your URL
+                subtitle.textContent = "Strava Segment"; // replace with your subtitle text
+                subtitle.target = '_blank'; // open in a new tab
+                subtitle.style.backgroundColor = lineColor; // replace with your highlight color
+                subtitle.style.textAlign = 'center'; // center the text
+                subtitle.style.display = 'block'; // make it a block element so it appears on a new line
+                // Add the subtitle to the container
+                container.appendChild(subtitle);
+
                 // Add the container to the charts div
                 document.getElementById('charts').appendChild(container);
 
                 // Extract the fetch dates and effort counts from the segment data, replacing negative effort counts with 0
                 const labels = segmentData.efforts.map(effort => effort.fetch_date);
                 const effortCounts = segmentData.efforts.map(effort => Math.max(effort.effort_count_diff, 0));
-                // Define the line and text colors for the chart
-                const lineColor = '#52796f'
-                const textColor = '#cad2c5'
+
 
                 new Chart(canvas, {
                     type: 'line',
@@ -85,6 +99,15 @@
                             text: (ctx) => `${segmentData.name}`,
                             font: {
                                 size: 20,
+                                family: 'Montserrat',
+                            },
+                        },
+                        subtitle: {
+                            display: true,
+                            color: textColor,
+                            text: (ctx) => `${segmentData.id}`,
+                            font: {
+                                size: 14,
                                 family: 'Montserrat',
                             },
                         },

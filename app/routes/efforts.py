@@ -23,7 +23,7 @@ async def segments_stats(request: Request, location: str, start_date: str, end_d
         for segment in segments:
             result = segments_repository.get_effort_counts_for_date_range(str(segment.id), start_date, end_date)
             if result is not None:
-                data[segment.id] = {"name": segment.name, "efforts": result}
+                data[segment.id] = {"name": segment.alt_name, "id": segment.id, "efforts": result}
         return templates.TemplateResponse("stats.html", {"request": request, "location": location, "data": data})
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
