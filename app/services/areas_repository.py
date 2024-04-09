@@ -42,3 +42,9 @@ class AreasRepository:
         Logger.debug(f"Deleting trail area: {name}")
         result = self.db.delete_one(self.config.AREAS_COLL_NAME, {"s_name": name})
         return result
+
+    def add_trail_base_to_area(self, name: str, trail_base: dict) -> TrailArea:
+        """Add a new trail base to a trail area."""
+        Logger.debug(f"Adding trail base to area: {name}")
+        self.db.update_one(self.config.AREAS_COLL_NAME, {"s_name": name}, {"$push": {"trail_bases": trail_base}})
+        return self.get_area(name)

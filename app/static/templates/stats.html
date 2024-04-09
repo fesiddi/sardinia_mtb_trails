@@ -26,22 +26,31 @@
         <script>
             const data = {{ data | tojson }};
 
+            // Convert the data object into an array of [key, value] pairs, sort them based on the total effort count differences
             const sortedData = Object.entries(data).sort((a, b) => {
-                const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
-                const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + effort.effort_count_diff, 0);
+                // Calculate the total effort count difference for each segment, replacing negative values with 0
+                const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + Math.max(effort.effort_count_diff, 0), 0);
+                const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + Math.max(effort.effort_count_diff, 0), 0);
+                // Sort in descending order of total effort count differences
                 return totalEffortsB - totalEffortsA;
             });
 
+            // For each segment in the sorted data
             for (const [segmentId, segmentData] of sortedData) {
+                // Create a new div element to contain the chart
                 const container = document.createElement('div');
                 container.className = 'chart-container';
+                // Create a new canvas element for the chart
                 const canvas = document.createElement('canvas');
+                // Add the canvas to the container
                 container.appendChild(canvas);
+                // Add the container to the charts div
                 document.getElementById('charts').appendChild(container);
 
+                // Extract the fetch dates and effort counts from the segment data, replacing negative effort counts with 0
                 const labels = segmentData.efforts.map(effort => effort.fetch_date);
-                const effortCounts = segmentData.efforts.map(effort => effort.effort_count_diff);
-
+                const effortCounts = segmentData.efforts.map(effort => Math.max(effort.effort_count_diff, 0));
+                // Define the line and text colors for the chart
                 const lineColor = '#52796f'
                 const textColor = '#cad2c5'
 

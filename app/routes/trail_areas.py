@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from app.models.TrailArea import TrailArea
+from app.models.TrailArea import TrailArea, TrailBase
 from app.services.areas_repository import AreasRepository
 from app.db.database import DatabaseConnectionError
 from app.services.areas_service import get_areas_repository
@@ -74,3 +74,20 @@ def delete_area(name, areas_repository: AreasRepository = Depends(get_areas_repo
         return {"message": f"Error deleting trail area from db: {e}"}
     except Exception as e:
         return {"message": f"Error deleting trail area: {e}"}
+
+
+@router.post("/trail_areas/{name}/trail_bases")
+def add_trail_base_to_area(
+    name: str,
+    trail_base: TrailBase,
+    areas_repository: AreasRepository = Depends(get_areas_repository)
+):
+    """Add a new trail base to a trail area."""
+    try:
+        Logger.info(f"Adding trail base to area: {name}")
+        areas_repository.add_trail_base_to_area(name, trail_base.dict())
+        return {"message": "Trail base added"}
+    except DatabaseConnectionError as e:
+        return {"message": f"Error adding trail base in db: {e}"}
+    except Exception as e:
+        return {"message": f"Error adding trail base: {e}"}
