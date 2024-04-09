@@ -15,7 +15,7 @@ export function createTextStyle(segmentName) {
 export function createTextLabelLayer(coordinates, segment) {
     const geometry = new ol.geom.LineString(coordinates);
     const feature = new ol.Feature({ geometry, ...segment });
-    feature.setStyle(createTextStyle(segment.name));
+    feature.setStyle(createTextStyle(segment.alt_name));
 
     const source = new ol.source.Vector({
         features: [feature],

@@ -76,11 +76,11 @@ function handleMapClick(evt, map, popup) {
 }
 
 function generatePopupContent(feature) {
-    const { name, id, kom, athlete_count, local_legend } =
+    const { name, alt_name, id, kom, athlete_count, local_legend } =
         feature.getProperties();
 
     return `
-    <h4><strong>${name}</strong></h4>
+    <h4><strong>${alt_name}</strong></h4>
     <p><strong>KOM: </strong>${kom}</p>
     <p><strong>Athletes Count: </strong>${athlete_count}</p>
     ${
