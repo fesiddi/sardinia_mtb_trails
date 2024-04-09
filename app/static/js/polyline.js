@@ -2,7 +2,7 @@ import { createPolylineStyle, createPolyline } from './styles.js';
 import { createMarkerStyle, createMarker, createLayer } from './marker.js';
 import { decode } from './decode.js';
 import { createTextLabelLayer } from './textLabel.js';
-import { calculateBounds } from './bounds.js'
+import { calculateBounds } from './bounds.js';
 
 export const addPolylineLayers = (map, segments) => {
     segments.forEach((segment) => {
