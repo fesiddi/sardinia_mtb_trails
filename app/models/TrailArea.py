@@ -12,7 +12,7 @@ class TrailBase(BaseModel):
     coordinates: Tuple[float, float] = [0.0, 0.0]
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "name": "Base1",
                 "coordinates": [12.34, 56.78]

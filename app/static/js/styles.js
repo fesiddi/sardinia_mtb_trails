@@ -1,7 +1,7 @@
 export const createPolylineStyle = (segment) => {
-    let redColor = 'rgba(255, 0, 0, 0.8)';
+    let color = setColor(segment);
     let purpleColor = 'rgba(128, 0, 128, 0.8)';
-    let color = segment.average_grade > 0 ? purpleColor : redColor;
+    color = segment.average_grade > 0 ? purpleColor : color;
     return new ol.style.Style({
         stroke: new ol.style.Stroke({
             color: color,
@@ -15,3 +15,17 @@ export const createPolyline = (segment, latlngs) =>
         geometry: new ol.geom.LineString(latlngs),
         ...segment,
     });
+
+const setColor = (segment) => {
+    if (segment.difficulty === 'green') {
+        return 'rgba(70, 180, 20, 1)';
+    } else if (segment.difficulty === 'blue') {
+        return 'rgba(20, 140, 240, 1)';
+    } else if (segment.difficulty === 'red') {
+        return 'rgba(220, 19, 19, 1)';
+    } else if (segment.difficulty === 'black') {
+        return 'rgba(0, 0, 0, 1)';
+    } else {
+        return 'rgba(220, 19, 19, 1)'; // default to red
+    }
+};
