@@ -89,10 +89,12 @@ class SegmentsRepository:
 
             # Calculate the difference in effort count with the previous date for each effort
             effort_count_diffs = []
-            for i in range(1, len(efforts_in_date_range)):
-                effort_count_diff = efforts_in_date_range[i].effort_count - efforts_in_date_range[i - 1].effort_count
-                effort_count_diffs.append(
-                    {"fetch_date": efforts_in_date_range[i].fetch_date, "effort_count_diff": effort_count_diff})
+            for current_effort, next_effort in zip(efforts_in_date_range, efforts_in_date_range[1:]):
+                effort_count_diff = next_effort.effort_count - current_effort.effort_count
+                effort_count_diffs.append({
+                    "fetch_date": next_effort.fetch_date,
+                    "effort_count_diff": effort_count_diff
+                })
 
             return effort_count_diffs
         return None
