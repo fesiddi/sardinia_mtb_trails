@@ -29,11 +29,11 @@ async def segments_stats(request: Request, location: str, start_date: str, end_d
         return {"message": f"Error fetching segment stats: {e}"}
 
 
-@router.get("/efforts/{segment_id}")
+@router.get("/efforts-days/{segment_id}")
 async def effort_change(segment_id: str, days: int = 7,
                         segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort change for a specific segment over the last x days (default 7).
-    Example: /efforts/33922489?days=5 or with default 7 days /efforts/33922489"""
+    Example: /efforts-days/33922489?days=5 or with default 7 days /efforts/33922489"""
     try:
         result = segments_repository.get_effort_count_change_for_last_x_days(segment_id, days)
     except DatabaseConnectionError as e:
@@ -47,10 +47,14 @@ async def effort_change(segment_id: str, days: int = 7,
 async def effort_counts(segment_id: str, start_date: str, end_date: str,
                         segments_repository: SegmentsRepository = Depends(get_segments_repository)):
     """Get effort counts for a specific segment within a date range.
-    Example: /efforts/33922489?start_date=01-01-2024&end_date=31-01-2024"""
+    Example: /efforts-interval/33922489?start_date=01-04-2024&end_date=30-04-2024"""
     try:
         result = segments_repository.get_effort_counts_for_date_range(segment_id, start_date, end_date)
     except DatabaseConnectionError as e:
+        return {"message": f"Error fetching segment stats: {e}"}
+    except ValueError as e:
+        return {"message": f"Invalid date format: {e}"}
+    except Exception as e:
         return {"message": f"Error fetching segment stats: {e}"}
     if result is None:
         return {"message": "No data available for this segment in the given date range"}
