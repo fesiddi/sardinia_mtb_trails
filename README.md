@@ -17,9 +17,7 @@ Welcome to the Sardinia MTB Trails project! This application provides comprehens
 To get started with the Sardinia MTB Trails application, follow these steps:
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/sardinia-mtb-trails.git
-    ```
+
 2. Navigate to the project directory:
     ```bash
     cd sardinia-mtb-trails
