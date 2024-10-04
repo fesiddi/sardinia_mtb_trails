@@ -1,11 +1,13 @@
 black:
-	black ./app ./tests
+    black ./app ./tests
 
 isort:
-	isort ./app ./tests
+    isort ./app ./tests
 
 qa: black isort
 
+install:
+    pip install -r requirements.txt
 
 run:
-	uvicorn app.main:app --reload
+    uvicorn app.main:app --reload
