@@ -22,7 +22,18 @@ To get started with the Sardinia MTB Trails application, follow these steps:
     ```bash
     cd sardinia-mtb-trails
     ```
-3. Install the necessary dependencies:
+3. Create and activate the virtual environment:
+    - On Windows:
+        ```bash
+        python -m venv venv
+        .\venv\Scripts\activate
+        ```
+    - On macOS/Linux:
+        ```bash
+        python3 -m venv venv
+        source venv/bin/activate
+        ```
+4. Install the necessary dependencies:
     ```bash
     make install
     ```
