@@ -1,5 +1,6 @@
+from typing import Dict, Optional
+
 from pydantic import BaseModel, model_validator
-from typing import Optional, Dict
 
 
 class LatLng(BaseModel):
@@ -76,18 +77,26 @@ class RawSegment(BaseModel):
     xoms: Xoms
     local_legend: Optional[LocalLegend]
 
-    @model_validator(mode='before')
+    @model_validator(mode="before")
     def convert_latlng(cls, values):
-        if 'start_latlng' in values and isinstance(values['start_latlng'], list):
-            values['start_latlng'] = LatLng(lat=values['start_latlng'][0], lng=values['start_latlng'][1])
-        if 'end_latlng' in values and isinstance(values['end_latlng'], list):
-            values['end_latlng'] = LatLng(lat=values['end_latlng'][0], lng=values['end_latlng'][1])
+        if "start_latlng" in values and isinstance(values["start_latlng"], list):
+            values["start_latlng"] = LatLng(
+                lat=values["start_latlng"][0], lng=values["start_latlng"][1]
+            )
+        if "end_latlng" in values and isinstance(values["end_latlng"], list):
+            values["end_latlng"] = LatLng(
+                lat=values["end_latlng"][0], lng=values["end_latlng"][1]
+            )
         return values
 
-    @model_validator(mode='before')
+    @model_validator(mode="before")
     def convert_local_legend(cls, value):
-        if value and value.get('effort_counts') and value['effort_counts'].get('female') is None:
-            value['effort_counts']['female'] = None
+        if (
+            value
+            and value.get("effort_counts")
+            and value["effort_counts"].get("female") is None
+        ):
+            value["effort_counts"]["female"] = None
         return value
 
     class Config:

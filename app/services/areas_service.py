@@ -1,8 +1,9 @@
-from app.services.areas_repository import AreasRepository
-from app.db.database import Database, DatabaseConnectionError
-from app.utils.config import Config
-from fastapi import Depends, HTTPException
 from dotenv import load_dotenv
+from fastapi import Depends, HTTPException
+
+from app.db.database import Database, DatabaseConnectionError
+from app.services.areas_repository import AreasRepository
+from app.utils.config import Config
 
 load_dotenv()
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
+from app.db.database import DatabaseConnectionError
 from app.models.TrailArea import TrailArea, TrailBase
 from app.services.areas_repository import AreasRepository
-from app.db.database import DatabaseConnectionError
 from app.services.areas_service import get_areas_repository
 from app.utils.logger import Logger
 
@@ -36,7 +36,9 @@ def trail_area(name, areas_repository: AreasRepository = Depends(get_areas_repos
 
 
 @router.post("/trail_areas")
-def add_area(area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)):
+def add_area(
+    area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)
+):
     """Add a new trail area to the database."""
     try:
         validated_area = TrailArea(**area)
@@ -50,7 +52,9 @@ def add_area(area: dict, areas_repository: AreasRepository = Depends(get_areas_r
 
 
 @router.put("/trail_areas/{name}")
-def edit_area(name, area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)):
+def edit_area(
+    name, area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)
+):
     """Edit an existing trail area in the database."""
     try:
         Logger.info(f"Editing trail area: {name}")
@@ -64,7 +68,9 @@ def edit_area(name, area: dict, areas_repository: AreasRepository = Depends(get_
 
 
 @router.delete("/trail_areas/{name}")
-def delete_area(name, areas_repository: AreasRepository = Depends(get_areas_repository)):
+def delete_area(
+    name, areas_repository: AreasRepository = Depends(get_areas_repository)
+):
     """Delete an existing trail area from the database."""
     try:
         Logger.info(f"Deleting trail area: {name}")
@@ -80,7 +86,7 @@ def delete_area(name, areas_repository: AreasRepository = Depends(get_areas_repo
 def add_trail_base_to_area(
     name: str,
     trail_base: TrailBase,
-    areas_repository: AreasRepository = Depends(get_areas_repository)
+    areas_repository: AreasRepository = Depends(get_areas_repository),
 ):
     """Add a new trail base to a trail area."""
     try:

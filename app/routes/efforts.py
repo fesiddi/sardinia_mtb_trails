@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Request, Depends, HTTPException
-
-from app.services.segments_repository import SegmentsRepository
-from app.db.database import DatabaseConnectionError
-from app.services.segments_service import get_segments_repository
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.templating import Jinja2Templates
+
+from app.db.database import DatabaseConnectionError
+from app.services.segments_repository import SegmentsRepository
+from app.services.segments_service import get_segments_repository
 
 router = APIRouter()
 
@@ -11,8 +11,13 @@ templates = Jinja2Templates(directory="app/static/templates")
 
 
 @router.get("/efforts/{location}")
-async def segments_stats(request: Request, location: str, start_date: str, end_date: str,
-                         segments_repository: SegmentsRepository = Depends(get_segments_repository)):
+async def segments_stats(
+    request: Request,
+    location: str,
+    start_date: str,
+    end_date: str,
+    segments_repository: SegmentsRepository = Depends(get_segments_repository),
+):
     """Get effort counts for all segments in a specific location within a date range.
     Example: /efforts/Chamonix?start_date=01-01-2024&end_date=31-01-2024"""
     segments = segments_repository.get_all_segments_for_area(location)
@@ -21,21 +26,34 @@ async def segments_stats(request: Request, location: str, start_date: str, end_d
     try:
         data = {}
         for segment in segments:
-            result = segments_repository.get_effort_counts_for_date_range(str(segment.id), start_date, end_date)
+            result = segments_repository.get_effort_counts_for_date_range(
+                str(segment.id), start_date, end_date
+            )
             if result is not None:
-                data[segment.id] = {"name": segment.alt_name, "id": segment.id, "efforts": result}
-        return templates.TemplateResponse("stats.html", {"request": request, "location": location, "data": data})
+                data[segment.id] = {
+                    "name": segment.alt_name,
+                    "id": segment.id,
+                    "efforts": result,
+                }
+        return templates.TemplateResponse(
+            "stats.html", {"request": request, "location": location, "data": data}
+        )
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
 
 
 @router.get("/efforts-days/{segment_id}")
-async def effort_change(segment_id: str, days: int = 7,
-                        segments_repository: SegmentsRepository = Depends(get_segments_repository)):
+async def effort_change(
+    segment_id: str,
+    days: int = 7,
+    segments_repository: SegmentsRepository = Depends(get_segments_repository),
+):
     """Get effort change for a specific segment over the last x days (default 7).
     Example: /efforts-days/33922489?days=5 or with default 7 days /efforts/33922489"""
     try:
-        result = segments_repository.get_effort_count_change_for_last_x_days(segment_id, days)
+        result = segments_repository.get_effort_count_change_for_last_x_days(
+            segment_id, days
+        )
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
     if result is None:
@@ -44,12 +62,18 @@ async def effort_change(segment_id: str, days: int = 7,
 
 
 @router.get("/efforts-interval/{segment_id}")
-async def effort_counts(segment_id: str, start_date: str, end_date: str,
-                        segments_repository: SegmentsRepository = Depends(get_segments_repository)):
+async def effort_counts(
+    segment_id: str,
+    start_date: str,
+    end_date: str,
+    segments_repository: SegmentsRepository = Depends(get_segments_repository),
+):
     """Get effort counts for a specific segment within a date range.
     Example: /efforts-interval/33922489?start_date=01-04-2024&end_date=30-04-2024"""
     try:
-        result = segments_repository.get_effort_counts_for_date_range(segment_id, start_date, end_date)
+        result = segments_repository.get_effort_counts_for_date_range(
+            segment_id, start_date, end_date
+        )
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
     except ValueError as e:

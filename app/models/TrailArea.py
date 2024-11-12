@@ -1,4 +1,5 @@
 from typing import List, Optional, Tuple
+
 from pydantic import BaseModel
 
 
@@ -13,10 +14,7 @@ class TrailBase(BaseModel):
 
     class Config:
         json_schema_extra = {
-            "example": {
-                "name": "Base1",
-                "coordinates": [12.34, 56.78]
-            }
+            "example": {"name": "Base1", "coordinates": [12.34, 56.78]}
         }
 
 

@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo.errors import ConfigurationError
+
 from app.utils.logger import Logger
 
 
@@ -19,14 +20,16 @@ class Database:
         return cls._instance
 
     def __init__(self, config):
-        if not hasattr(self, 'initialized'):
+        if not hasattr(self, "initialized"):
             self.config = config
             self.db_uri = self.config.DB_URI
             self.db_name = self.config.DB_NAME
 
             if not self.db_uri or not self.db_name:
                 Logger.error("DB_URI and DB_NAME environment variables must be set")
-                raise DatabaseConnectionError("DB_URI and DB_NAME environment variables must be set")
+                raise DatabaseConnectionError(
+                    "DB_URI and DB_NAME environment variables must be set"
+                )
             try:
                 self.client = MongoClient(self.db_uri)
                 self.db = self.client[self.db_name]
@@ -36,7 +39,8 @@ class Database:
                     "An Invalid URI host error was received. Is your Atlas host name correct in your connection string?"
                 )
                 raise DatabaseConnectionError(
-                    "An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
+                    "An Invalid URI host error was received. Is your Atlas host name correct in your connection string?"
+                )
             except Exception as e:
                 Logger.error(f"An error occurred: {e}")
                 raise DatabaseConnectionError(f"An error occurred: {e}")

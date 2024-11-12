@@ -1,14 +1,14 @@
 import os
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, Depends
+from fastapi import Depends, FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from app.routes import efforts, segments, trail_areas
 from app.services.areas_repository import AreasRepository
-from app.utils.config import Config
-from app.routes import segments, efforts, trail_areas
 from app.services.areas_service import get_areas_repository
+from app.utils.config import Config
 
 load_dotenv()
 
@@ -25,7 +25,9 @@ config = Config()
 
 
 @app.get("/")
-async def home_route(request: Request, areas_repository: AreasRepository = Depends(get_areas_repository)):
+async def home_route(
+    request: Request, areas_repository: AreasRepository = Depends(get_areas_repository)
+):
     try:
         trail_areas_data = areas_repository.get_all_areas()
         return templates.TemplateResponse(

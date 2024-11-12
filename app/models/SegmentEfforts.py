@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from typing import List, Optional
+
+from pydantic import BaseModel
 
 
 class Effort(BaseModel):
@@ -14,10 +15,12 @@ class SegmentEfforts(BaseModel):
 
     @classmethod
     def from_mongo(cls, data: dict):
-        id_str = str(data['_id']) if '_id' in data else None
+        id_str = str(data["_id"]) if "_id" in data else None
         return cls(
             id=id_str,
-            name=data['name'],
-            efforts=[Effort(effort_count=int(e['effort_count']), fetch_date=e['fetch_date'])
-                     for e in data['efforts']]
+            name=data["name"],
+            efforts=[
+                Effort(effort_count=int(e["effort_count"]), fetch_date=e["fetch_date"])
+                for e in data["efforts"]
+            ],
         )

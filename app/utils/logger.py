@@ -21,7 +21,9 @@ class Logger:
             Logger.logger.addFilter(ContextFilter())
             Logger.logger.setLevel(logging.INFO)
 
-            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+            formatter = logging.Formatter(
+                "%(asctime)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+            )
 
             # StreamHandler logs to console
             console_handler = logging.StreamHandler()
