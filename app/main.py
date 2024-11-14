@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 from app.routes import efforts, segments, trail_areas
 from app.services.areas_repository import AreasRepository
 from app.services.areas_service import get_areas_repository
-from app.utils.config import Config
+from app.utils.config import get_config
 
 load_dotenv()
 
@@ -21,7 +21,7 @@ app.mount(
 )
 templates = Jinja2Templates(directory="app/static/templates")
 
-config = Config()
+config = get_config()
 
 
 @app.get("/")
