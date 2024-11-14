@@ -1,17 +1,21 @@
 from fastapi.testclient import TestClient
+from fastapi import status
 
 from app.main import app
 
 client = TestClient(app)
 
-def test_segments_location_for_capoterra():
-    response = client.get("/segments/alghero")
-    assert response.status_code == 200
+def test_get_all_segments():
+    response = client.get("/segments")
+    assert response.code == status.HTTP_200_OK
 
+def test_segments_for_specific_location():
+    response = client.get("/segments/alghero")
+    assert response.status_code == status.HTTP_200_OK
 
 def test_segment_list_for_alghero():
     response = client.get("/segments/alghero")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     segments = response.json()
     assert segments[0]["name"] == "1. Merenderos (Red DH)"
     assert segments[1]["name"] == "2. Maranatz (Red DH)"
