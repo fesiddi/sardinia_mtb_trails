@@ -33,7 +33,7 @@ class SegmentsRepository:
     def get_all_segments_for_area(self, area: str) -> List[EnhancedSegment]:
         """Get all segments for a specific area."""
         Logger.debug(f"Getting all segments for area: {area}")
-        result = self.db.find_many(self.config.SEGMENTS_COLL_NAME, {"trail_area": area})
+        result = self.db.find_many(self.config.SEGMENTS_COLL_NAME, {"trail_area": area.lower()})
         segments = [EnhancedSegment(**segment) for segment in result]
         return segments
 
