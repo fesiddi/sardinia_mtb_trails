@@ -7,7 +7,7 @@ client = TestClient(app)
 
 def test_get_all_segments():
     response = client.get("/segments")
-    assert response.code == status.HTTP_200_OK
+    assert response.status_code == status.HTTP_200_OK
 
 def test_segments_for_specific_location():
     response = client.get("/segments/alghero")
