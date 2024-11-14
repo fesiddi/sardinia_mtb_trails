@@ -7,7 +7,7 @@ from app.services.segments_service import get_segments_repository
 router = APIRouter()
 
 
-@router.get("/segments", tags=["segments"])
+@router.get("/segments", tags=["segments"], summary="Get all segments")
 async def segments(
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
@@ -19,7 +19,7 @@ async def segments(
         return {"message": f"Error fetching segment stats: {e}"}
 
 
-@router.get("/segments/{location}")
+@router.get("/segments/{location}", tags=["segments"])
 async def segments_location(
     location: str,
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
