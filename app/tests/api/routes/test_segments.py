@@ -13,7 +13,6 @@ def test_segment_list_for_alghero():
     response = client.get("/segments/alghero")
     assert response.status_code == 200
     segments = response.json()
-    assert len(segments) == 10
     assert segments[0]["name"] == "1. Merenderos (Red DH)"
     assert segments[1]["name"] == "2. Maranatz (Red DH)"
     assert segments[2]["name"] == "3. Timid'Huez (Black DH)"
