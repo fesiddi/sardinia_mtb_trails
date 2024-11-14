@@ -1,6 +1,6 @@
 from typing import List, Optional, Tuple
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class LocalRider(BaseModel):
@@ -12,10 +12,7 @@ class TrailBase(BaseModel):
     name: str
     coordinates: Tuple[float, float] = [0.0, 0.0]
 
-    class Config:
-        json_schema_extra = {
-            "example": {"name": "Base1", "coordinates": [12.34, 56.78]}
-        }
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
 class TrailArea(BaseModel):

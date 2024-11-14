@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, model_validator, ConfigDict
 
 
 class LatLng(BaseModel):
@@ -98,6 +98,5 @@ class RawSegment(BaseModel):
         ):
             value["effort_counts"]["female"] = None
         return value
-
-    class Config:
-        populate_by_name = True
+    
+    model_config = ConfigDict(populate_by_name=True)
