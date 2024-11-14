@@ -29,8 +29,8 @@
             // Convert the data object into an array of [key, value] pairs, sort them based on the total effort count differences
             const sortedData = Object.entries(data).sort((a, b) => {
                 // Calculate the total effort count difference for each segment, replacing negative values with 0
-                const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + Math.max(effort.effort_count_diff, 0), 0);
-                const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + Math.max(effort.effort_count_diff, 0), 0);
+                const totalEffortsA = a[1].efforts.reduce((sum, effort) => sum + Math.max(effort.efforts, 0), 0);
+                const totalEffortsB = b[1].efforts.reduce((sum, effort) => sum + Math.max(effort.efforts, 0), 0);
                 // Sort in descending order of total effort count differences
                 return totalEffortsB - totalEffortsA;
             });
@@ -65,7 +65,7 @@
 
                 // Extract the fetch dates and effort counts from the segment data, replacing negative effort counts with 0
                 const labels = segmentData.efforts.map(effort => effort.fetch_date);
-                const effortCounts = segmentData.efforts.map(effort => Math.max(effort.effort_count_diff, 0));
+                const effortCounts = segmentData.efforts.map(effort => Math.max(effort.efforts, 0));
 
 
                 new Chart(canvas, {

@@ -51,7 +51,7 @@ async def segments_stats(
                     "efforts": result,
                 }
         return templates.TemplateResponse(
-            "stats.html", {"request": request, "location": location, "data": data}
+            request, "stats.html", {"location": location, "data": data}
         )
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}

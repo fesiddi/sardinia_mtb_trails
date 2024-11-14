@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.database import DatabaseConnectionError
 from app.services.segments_repository import SegmentsRepository
@@ -28,7 +28,7 @@ async def segments_location(
     try:
         area_segments = segments_repository.get_all_segments_for_area(location)
         if not area_segments:
-            raise HTTPException(status_code=404, detail="Location not found")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Location not found")
         return area_segments
 
     except DatabaseConnectionError as e:
