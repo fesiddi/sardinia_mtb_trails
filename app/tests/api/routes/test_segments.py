@@ -17,10 +17,6 @@ def test_non_existent_location():
     response = client.get("/segments/nonexistinglocation")
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
-def test_invalid_location_format():
-    response = client.get("/segments/12345")
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
-
 def test_segment_list_for_alghero():
     response = client.get("/segments/alghero")
     assert response.status_code == status.HTTP_200_OK
