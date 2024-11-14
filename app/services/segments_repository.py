@@ -48,10 +48,10 @@ class SegmentsRepository:
             return efforts
         return None
 
-    def get_effort_count_change_for_last_x_days(
+    def get_effort_count_for_last_x_days(
         self, segment_id: str, days: int = 7
     ) -> Optional[int]:
-        """Get the change in effort count for a segment over the last x days (default 7).
+        """Get the efforts count for a segment over the last x days (default 7).
         Returns None if there is not enough data"""
         # Fetch segment efforts
         segment_efforts = self.get_segment_efforts(segment_id)
@@ -62,7 +62,7 @@ class SegmentsRepository:
         recent_efforts = [
             effort
             for effort in segment_efforts
-            if self._is_date_recent(effort.fetch_date, days)
+            if self._is_date_within_last_days(effort.fetch_date, days)
         ]
 
         # If there are less than 2 efforts, return None
@@ -113,14 +113,14 @@ class SegmentsRepository:
                 effort_count_diffs.append(
                     {
                         "fetch_date": next_effort.fetch_date,
-                        "effort_count_diff": effort_count_diff,
+                        "efforts": effort_count_diff,
                     }
                 )
 
             return effort_count_diffs
         return None
 
-    def _is_date_recent(self, date: str, days: int) -> bool:
+    def _is_date_within_last_days(self, date: str, days: int) -> bool:
         """Check if a date is within the last x days."""
         date = datetime.strptime(date, Config.DATE_FORMAT)
         x_days_ago = datetime.now() - timedelta(days=days)

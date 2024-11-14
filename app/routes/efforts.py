@@ -1,5 +1,8 @@
+from typing import Any, Dict, List
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 
 from app.db.database import DatabaseConnectionError
 from app.services.segments_repository import SegmentsRepository
@@ -10,6 +13,18 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/static/templates")
 
 
+class EffortsDaysResponse(BaseModel):
+    efforts: int
+
+
+class EffortEntry(BaseModel):
+    fetch_date: str
+    efforts: int
+
+
+EffortsCountResponse = List[EffortEntry]
+
+
 @router.get("/efforts/{location}")
 async def segments_stats(
     request: Request,
@@ -18,7 +33,7 @@ async def segments_stats(
     end_date: str,
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
-    """Get effort counts for all segments in a specific location within a date range.
+    """Get efforts count for all segments in a specific location within a date range.
     Example: /efforts/alghero?start_date=01-10-2024&end_date=31-10-2024"""
     segments = segments_repository.get_all_segments_for_area(location)
     if not segments:
@@ -42,33 +57,31 @@ async def segments_stats(
         return {"message": f"Error fetching segment stats: {e}"}
 
 
-@router.get("/efforts-days/{segment_id}")
-async def effort_change(
+@router.get("/efforts-days/{segment_id}", response_model=EffortsDaysResponse)
+async def effort_last_days(
     segment_id: str,
     days: int = 7,
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
-    """Get effort change for a specific segment over the last x days (default 7).
+    """Get efforts count for a specific segment over the last x days (default 7).
     Example: /efforts-days/33922489?days=5 or with default 7 days /efforts/33922489"""
     try:
-        result = segments_repository.get_effort_count_change_for_last_x_days(
-            segment_id, days
-        )
+        result = segments_repository.get_effort_count_for_last_x_days(segment_id, days)
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
     if result is None:
         return {"message": "No data available for this segment"}
-    return {f"effort_change_last_{days}_days": result}
+    return {"efforts": result}
 
 
-@router.get("/efforts-interval/{segment_id}")
+@router.get("/efforts-interval/{segment_id}", response_model=EffortsCountResponse)
 async def effort_counts(
     segment_id: str,
     start_date: str,
     end_date: str,
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
-    """Get effort counts for a specific segment within a date range.
+    """Get efforts count for a specific segment within a date range.
     Example: /efforts-interval/33922489?start_date=01-10-2024&end_date=30-10-2024"""
     try:
         result = segments_repository.get_effort_counts_for_date_range(
@@ -82,4 +95,4 @@ async def effort_counts(
         return {"message": f"Error fetching segment stats: {e}"}
     if result is None:
         return {"message": "No data available for this segment in the given date range"}
-    return {"effort_counts": result}
+    return result
