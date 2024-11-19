@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi.responses import JSONResponse
 
 from typing import List
 from app.db.database import DatabaseConnectionError
-from app.models.TrailArea import TrailArea, TrailBase, MessageResponse
+from app.models.TrailArea import TrailArea, TrailBase
 from app.services.areas_repository import AreasRepository
 from app.services.areas_service import get_areas_repository
 from app.utils.logger import Logger
@@ -34,13 +35,12 @@ def trail_area(name, areas_repository: AreasRepository = Depends(get_areas_repos
 
 @router.post("/trail_areas", response_model=TrailArea)
 def add_area(
-    area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)
+    area: TrailArea, areas_repository: AreasRepository = Depends(get_areas_repository)
 ):
     """Add a new trail area to the database."""
     try:
-        validated_area = TrailArea(**area)
-        Logger.info(f"Adding trail area {validated_area.name}")
-        new_area = areas_repository.add_area(validated_area)
+        Logger.info(f"Adding trail area {area.name}")
+        new_area = areas_repository.add_area(area)
         return new_area
     except DatabaseConnectionError as e:
         return {"message": f"Error adding trail area in db: {e}"}
@@ -48,41 +48,40 @@ def add_area(
 
 @router.put("/trail_areas/{name}", response_model=TrailArea)
 def edit_area(
-    name, area: dict, areas_repository: AreasRepository = Depends(get_areas_repository)
-):
+    name, area: TrailArea, areas_repository: AreasRepository = Depends(get_areas_repository)
+)-> Response:
     """Edit an existing trail area in the database."""
     try:
         Logger.info(f"Editing trail area: {name}")
-        validated_area = TrailArea(**area)
-        edited_area = areas_repository.edit_area(name, validated_area)
+        edited_area = areas_repository.edit_area(name, area)
         return edited_area
     except DatabaseConnectionError as e:
         return {"message": f"Error editing trail area in db: {e}"}
 
 
-@router.delete("/trail_areas/{name}", response_model=MessageResponse)
+@router.delete("/trail_areas/{name}")
 def delete_area(
     name, areas_repository: AreasRepository = Depends(get_areas_repository)
-):
+)-> JSONResponse:
     """Delete an existing trail area from the database."""
     try:
         Logger.info(f"Deleting trail area: {name}")
         areas_repository.delete_area(name)
-        return {"message": "Area deleted"}
+        return JSONResponse(content={"message": "Area deleted"})
     except DatabaseConnectionError as e:
-        return {"message": f"Error deleting trail area from db: {e}"}
+        return JSONResponse(content={"message": f"Error deleting trail area from db: {e}"})
 
 
-@router.post("/trail_areas/{name}/trail_bases", response_model=MessageResponse)
+@router.post("/trail_areas/{name}/trail_bases")
 def add_trail_base_to_area(
     name: str,
     trail_base: TrailBase,
     areas_repository: AreasRepository = Depends(get_areas_repository),
-):
+)-> JSONResponse:
     """Add a new trail base to a trail area."""
     try:
         Logger.info(f"Adding trail base to area: {name}")
-        areas_repository.add_trail_base_to_area(name, trail_base.dict())
-        return {"message": "Trail base added"}
+        areas_repository.add_trail_base_to_area(name, trail_base.model_dump())
+        return JSONResponse(content={"message": "Trail base added"})
     except DatabaseConnectionError as e:
-        return {"message": f"Error adding trail base in db: {e}"}
+        return JSONResponse(content={"message": f"Error adding trail base in db: {e}"})

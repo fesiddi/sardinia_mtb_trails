@@ -1,5 +1,6 @@
 from typing import List, Optional, Tuple
 
+from fastapi import Response
 from pydantic import BaseModel, ConfigDict
 
 
@@ -22,6 +23,3 @@ class TrailArea(BaseModel):
     local_riders: List[LocalRider]
     instagram: List[str]
     trail_bases: Optional[List[TrailBase]] | None = None
-
-class MessageResponse(BaseModel):
-    message: str

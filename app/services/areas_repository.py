@@ -29,13 +29,13 @@ class AreasRepository:
     def add_area(self, area: TrailArea) -> TrailArea:
         """Add a new trail area to the database."""
         Logger.debug(f"Adding new trail area: {area}")
-        self.db.insert_one(self.config.AREAS_COLL_NAME, area.dict())
+        self.db.insert_one(self.config.AREAS_COLL_NAME, area.model_dump())
         return area
 
     def edit_area(self, name: str, area: TrailArea) -> TrailArea:
         """Edit an existing trail area in the database."""
         Logger.debug(f"Editing trail area: {name}")
-        self.db.update_one(self.config.AREAS_COLL_NAME, {"s_name": name}, area.dict())
+        self.db.update_one(self.config.AREAS_COLL_NAME, {"s_name": name}, area.model_dump())
         return area
 
     def delete_area(self, name: str) -> bool:
