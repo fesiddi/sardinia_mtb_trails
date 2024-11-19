@@ -3,14 +3,15 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.db.database import DatabaseConnectionError
 from app.services.segments_repository import SegmentsRepository
 from app.services.segments_service import get_segments_repository
+from app.models.EnhancedSegment import EnhancedSegment
 
 router = APIRouter()
 
 
-@router.get("/segments", tags=["segments"], summary="Get all segments")
+@router.get("/segments", tags=["segments"], summary="Get all segments", response_model=list[EnhancedSegment])
 async def segments(
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
-):
+)-> list[EnhancedSegment]:
     """Get all segments."""
     try:
         found_segments = segments_repository.get_all_segments()
@@ -19,11 +20,11 @@ async def segments(
         return {"message": f"Error fetching segment stats: {e}"}
 
 
-@router.get("/segments/{location}", tags=["segments"])
+@router.get("/segments/{location}", tags=["segments"], response_model=list[EnhancedSegment])
 async def segments_location(
     location: str,
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
-):
+)-> list[EnhancedSegment]:
     """Get all mapped segments for a specific location."""
     try:
         area_segments = segments_repository.get_all_segments_for_area(location)

@@ -1,6 +1,5 @@
 from typing import List, Optional, Tuple
 
-from fastapi import Response
 from pydantic import BaseModel, ConfigDict
 
 
