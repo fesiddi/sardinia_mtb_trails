@@ -41,7 +41,6 @@ Welcome to the Sardinia MTB Trails project! This application provides comprehens
     ```bash
     cd sardinia_mtb_trails
     ```
-    ```
 
 3. **Create and configure the [.env](http://_vscodecontentref_/2) file**:
     - Copy the example [.env](http://_vscodecontentref_/3) file and configure it with your settings:
@@ -79,6 +78,25 @@ Welcome to the Sardinia MTB Trails project! This application provides comprehens
     ```bash
     make run
     ```
+
+### Quality Assurance
+
+To run code quality checks, use the following command:
+
+```bash
+make qa
+```
+
+This will run black and isort to format and sort your code.
+
+### Running Tests
+
+To run tests, use the following command:
+```bash
+make test
+```
+
+This will run your test suite using pytest.
 
 ## API Documentation
 
