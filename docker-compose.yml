@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - DB_URI=${DB_URI}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-seed:/mongo-seed
+    entrypoint: ["bash", "-c", "chmod +x /mongo-seed/entrypoint.sh /mongo-seed/init-mongo.sh && /mongo-seed/entrypoint.sh"]
+
+volumes:
+  mongo-data:

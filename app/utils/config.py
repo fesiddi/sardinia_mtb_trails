@@ -19,12 +19,12 @@ class Config:
 class DevelopmentConfig(Config):
     def __init__(self):
         super().__init__()
-        self.DB_URI = os.getenv("DB_URI", "mongodb://mongo:27017/localdb")
+        self.DB_URI = os.getenv("DB_URI")
 
 class ProductionConfig(Config):
     def __init__(self):
         super().__init__()
-        self.DB_URI = os.getenv("DB_URI")
+        self.DB_URI = os.getenv("PROD_DB_URI")
 
 def get_config():
     environment = os.getenv("ENVIRONMENT", "production")
