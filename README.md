@@ -9,20 +9,56 @@ Welcome to the Sardinia MTB Trails project! This application provides comprehens
 -   Detailed trail descriptions
 -   Difficulty ratings
 -   Distance and elevation profiles
--   User reviews and ratings
 -   Interactive trail maps
 
-## Installation
+## Setup
 
-To get started with the Sardinia MTB Trails application, follow these steps:
+### Using Docker
 
-1. Clone the repository:
+1. **Clone the repository**
 
-2. Navigate to the project directory:
+2. **Navigate the repository**:
     ```bash
-    cd sardinia-mtb-trails
+    cd sardinia_mtb_trails
     ```
-3. Create and activate the virtual environment:
+
+3. **Create and configure the `.env` file**:
+    - Copy the example `.env` file and configure it with your settings:
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Start the application and MongoDB containers**:
+    ```bash
+    docker-compose up --build
+    ```
+
+### Local Development with Hot Reload
+
+1. **Clone the repository**
+
+2. **Navigate the repository**:
+    ```bash
+    cd sardinia_mtb_trails
+    ```
+    ```
+
+3. **Create and configure the [.env](http://_vscodecontentref_/2) file**:
+    - Copy the example [.env](http://_vscodecontentref_/3) file and configure it with your settings:
+    ```bash
+    cp .env.example .env
+    ```
+    - Ensure your DB_URI is:
+    ```
+    DB_URI=mongodb://localhost:27017
+    ```
+
+4. **Start the MongoDB container**:
+    ```bash
+    docker-compose up -d mongo
+    ```
+
+5. **Create a virtual environment and activate it**:
     - On Windows:
         ```bash
         python -m venv venv
@@ -33,18 +69,16 @@ To get started with the Sardinia MTB Trails application, follow these steps:
         python3 -m venv venv
         source venv/bin/activate
         ```
-4. Install the necessary dependencies:
+
+6. **Install the necessary dependencies**:
     ```bash
     make install
     ```
 
-## Usage
-
-To run the application, use the following command:
-
-```bash
-make run
-```
+7. **Run the application**:
+    ```bash
+    make run
+    ```
 
 ## API Documentation
 
