@@ -67,11 +67,12 @@ async def effort_last_days(
     Example: /efforts-days/33922489?days=5 or with default 7 days /efforts/33922489"""
     try:
         result = segments_repository.get_effort_count_for_last_x_days(segment_id, days)
+        if result is None:
+            return {"message": "No data available for this segment"}
+        return {"efforts": result}
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
-    if result is None:
-        return {"message": "No data available for this segment"}
-    return {"efforts": result}
+
 
 
 @router.get("/efforts-interval/{segment_id}", response_model=EffortsCountResponse)
@@ -87,12 +88,12 @@ async def effort_counts(
         result = segments_repository.get_effort_counts_for_date_range(
             segment_id, start_date, end_date
         )
+        if result is None:
+            return {"message": "No data available for this segment in the given date range"}
+        return result
     except DatabaseConnectionError as e:
         return {"message": f"Error fetching segment stats: {e}"}
     except ValueError as e:
         return {"message": f"Invalid date format: {e}"}
     except Exception as e:
         return {"message": f"Error fetching segment stats: {e}"}
-    if result is None:
-        return {"message": "No data available for this segment in the given date range"}
-    return result
