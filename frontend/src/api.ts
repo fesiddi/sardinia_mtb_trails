@@ -1,4 +1,4 @@
-import { TrailArea } from './types/trailArea';
+import { TrailArea } from './types/TrailArea';
 
 export const fetchTrailAreas = async (): Promise<TrailArea[]> => {
     try {
