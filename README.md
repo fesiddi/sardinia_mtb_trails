@@ -32,59 +32,13 @@ Welcome to the Sardinia MTB Trails project! This application provides comprehens
     ```bash
     docker-compose up --build
     ```
-
-### Local Development with Hot Reload
-
-1. **Clone the repository**
-
-2. **Navigate the repository**:
-    ```bash
-    cd sardinia_mtb_trails
-    ```
-
-3. **Create and configure the [.env](http://_vscodecontentref_/2) file**:
-    - Copy the example [.env](http://_vscodecontentref_/3) file and configure it with your settings:
-    ```bash
-    cp .env.example .env
-    ```
-    - Ensure your DB_URI is:
-    ```
-    DB_URI=mongodb://localhost:27017
-    ```
-
-4. **Start the MongoDB container**:
-    ```bash
-    docker-compose up -d mongo
-    ```
-
-5. **Create a virtual environment and activate it**:
-    - On Windows:
-        ```bash
-        python -m venv venv
-        .\venv\Scripts\activate
-        ```
-    - On macOS/Linux:
-        ```bash
-        python3 -m venv venv
-        source venv/bin/activate
-        ```
-
-6. **Install the necessary dependencies**:
-    ```bash
-    make install
-    ```
-
-7. **Run the application**:
-    ```bash
-    make run
-    ```
-
+    
 ### Quality Assurance
 
 To run code quality checks, use the following command:
 
 ```bash
-make qa
+docker compose app make qa
 ```
 
 This will run black and isort to format and sort your code.
@@ -93,7 +47,7 @@ This will run black and isort to format and sort your code.
 
 To run tests, use the following command:
 ```bash
-make test
+mdocker compose app ake test
 ```
 
 This will run your test suite using pytest.
