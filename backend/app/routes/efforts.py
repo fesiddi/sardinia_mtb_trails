@@ -34,7 +34,7 @@ async def segments_stats(
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
     """Get efforts count for all segments in a specific location within a date range.
-    Example: /efforts/alghero?start_date=01-10-2024&end_date=31-10-2024"""
+    Example: /api/efforts/alghero?start_date=01-10-2024&end_date=31-10-2024"""
     segments = segments_repository.get_all_segments_for_area(location)
     if not segments:
         raise HTTPException(status_code=404, detail="Location not found")
@@ -64,7 +64,8 @@ async def effort_last_days(
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
     """Get efforts count for a specific segment over the last x days (default 7).
-    Example: /efforts-days/33922489?days=5 or with default 7 days /efforts/33922489"""
+    Example: /api/efforts-days/33922489?days=5 or with default 7 days /efforts/33922489
+    """
     try:
         result = segments_repository.get_effort_count_for_last_x_days(segment_id, days)
         if result is None:
@@ -82,7 +83,7 @@ async def effort_counts(
     segments_repository: SegmentsRepository = Depends(get_segments_repository),
 ):
     """Get efforts count for a specific segment within a date range.
-    Example: /efforts-interval/33922489?start_date=01-10-2024&end_date=30-10-2024"""
+    Example: /api/efforts-interval/33922489?start_date=01-10-2024&end_date=30-10-2024"""
     try:
         result = segments_repository.get_effort_counts_for_date_range(
             segment_id, start_date, end_date
