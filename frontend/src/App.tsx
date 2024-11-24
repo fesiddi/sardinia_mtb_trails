@@ -4,6 +4,7 @@ import { fetchTrailAreas } from './api';
 import { TrailArea } from './types/TrailArea';
 import TrailAreaDescription from './components/TrailAreaDescription.tsx';
 import TrailAreaContacts from './components/TrailAreaContacts.tsx';
+import TrailAreaMap from './components/TrailAreaMap.tsx';
 
 
 function App() {
@@ -30,9 +31,14 @@ function App() {
             <div className={styles.areasList}>
                 {trailAreas.map((area) => (
                     <div key={area.name} className={styles.area}>
-                        <TrailAreaDescription name={area.name} description={area.description} />
+                        <TrailAreaDescription
+                            name={area.name}
+                            description={area.description}
+                        />
+                        <TrailAreaMap areaShortName={area.s_name} />
                         <TrailAreaContacts
-                            instagram={area.instagram} localRiders={area.local_riders}
+                            instagram={area.instagram}
+                            localRiders={area.local_riders}
                         />
                     </div>
                 ))}
