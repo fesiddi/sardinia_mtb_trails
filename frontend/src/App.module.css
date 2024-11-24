@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 0.5rem;
+}
+
+.areasList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.area {
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Optional: Add media queries for additional responsiveness */
+@media (max-width: 768px) {
+  .area {
+    width: 95%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .area {
+    width: 100%;
+  }
+}
