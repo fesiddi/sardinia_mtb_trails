@@ -8,7 +8,6 @@ import TrailAreaMap from './components/TrailAreaMap.tsx';
 
 
 function App() {
-    const [count, setCount] = useState(0);
     const [trailAreas, setTrailAreas] = useState<TrailArea[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +34,7 @@ function App() {
                             name={area.name}
                             description={area.description}
                         />
-                        <TrailAreaMap areaShortName={area.s_name} />
+                        <TrailAreaMap areaShortName={area.s_name} trailBases={area.trail_bases} />
                         <TrailAreaContacts
                             instagram={area.instagram}
                             localRiders={area.local_riders}

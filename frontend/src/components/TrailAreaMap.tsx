@@ -1,42 +1,65 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'ol/ol.css';
-import { Map as OLMap, View } from 'ol';
-import { Tile as TileLayer } from 'ol/layer';
-import { OSM } from 'ol/source';
+import { Map as OLMap } from 'ol';
 import styles from './TrailAreaMap.module.css';
+import { initializeMap } from '../utils/mapInitialization'
+import { drawSegments } from '../utils/mapUtils';
+import { Segment } from '../types/Segment';
+import { fetchAreaSegments } from '../api';
+import { TrailBase } from '../types/TrailArea';
 
 interface TrailAreaMapProps {
     areaShortName: string;
+    trailBases: TrailBase[] | null | undefined;
 }
 
 const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName }) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstanceRef = useRef<OLMap | null>(null);
+    const [segments, setSegments] = useState<Segment[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const hasFetchedSegments = useRef<boolean>(false); // Ref to track if segments have been fetched
 
     useEffect(() => {
-        if (!mapRef.current) return;
+        const getSegments = async () => {
+            try {
+                const data = await fetchAreaSegments(areaShortName);
+                setSegments(data);
+                setError(null);
+            } catch (error) {
+                console.error('Failed to fetch segments: ', error);
+                setError('Failed to fetch segments');
+                setSegments([]);
+            }
+        };
+        if (!hasFetchedSegments.current) {
+            getSegments();
+            hasFetchedSegments.current = true;
+        }
+    }, [areaShortName]);
+
+    useEffect(() => {
+        if (!mapRef.current || segments.length === 0) return;
+
+        const firstSegment = segments[0];
+        const { start_lat, start_lng } = firstSegment;
 
         console.log('Initializing map');
-        const mapInstance = new OLMap({
-            target: mapRef.current!,
-            layers: [
-                new TileLayer({
-                    source: new OSM(),
-                }),
-            ],
-            view: new View({
-                center: [0, 0],
-                zoom: 2,
-            }),
-        });
-
+        const mapInstance = initializeMap(mapRef.current, start_lng, start_lat);
         mapInstanceRef.current = mapInstance;
 
         return () => {
             console.log('Cleaning up map');
             mapInstance.setTarget(undefined);
         };
-    }, []);
+    }, [segments]);
+
+
+  useEffect(() => {
+      if (mapInstanceRef.current && segments.length > 0) {
+        drawSegments(mapInstanceRef.current, segments)
+      }
+  }, [segments]);
 
     return (
         <div className={styles.mapContainer}>
@@ -45,6 +68,7 @@ const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName }) => {
                 ref={mapRef}
                 className={styles.mapContainer}
             ></div>
+            {error && <p>{error}</p>}
         </div>
     );
 };
