@@ -35,7 +35,7 @@ export const drawSegments = (map: Map, segments: Segment[]): void => {
 
         // Create a text label layer for the segment
         const decodedPolyline = decodePolyline(segment.polyline);
-        const textLabelLayer = createTextLabelLayer(decodedPolyline, segment);
+        const textLabelLayer = createTextLabelLayer(decodedPolyline, segment, map);
 
         // Add features to the vector source
         vectorSource.addFeature(lineFeature);

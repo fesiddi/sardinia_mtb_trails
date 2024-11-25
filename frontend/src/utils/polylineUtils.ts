@@ -25,7 +25,7 @@ export const createPolylineStyle = (segment: Segment) => {
     return new Style({
         stroke: new Stroke({
             color: color,
-            width: 3,
+            width: 4,
         }),
     });
 };
