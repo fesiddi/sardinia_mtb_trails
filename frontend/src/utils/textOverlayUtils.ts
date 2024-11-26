@@ -8,7 +8,7 @@ import { createPolylineStyle } from './polylineUtils';
 import { Segment } from '../types/Segment';
 
 
-const ZOOM_LEVEL_THRESHOLD = 14;
+const ZOOM_LEVEL_THRESHOLD = 15;
 
 /**
  * Creates a text style for the segment name.
