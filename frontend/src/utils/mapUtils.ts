@@ -2,17 +2,18 @@ import { Map } from 'ol';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Segment } from '../types/Segment';
-import { createMarker, createMarkerStyle } from './markerUtils';
+import { createMarker, createMarkerStyle, createTrailBaseMarker, createTrailBaseMarkerStyle } from './markerUtils';
 import { createTextLabelLayer } from './textOverlayUtils';
 import { createPolylineFeature, createPolylineStyle } from './polylineUtils';
 import { decodePolyline } from './decodePolyline';
+import { TrailBase } from '../types/TrailArea';
 
 /**
  * Draws all segments on the map.
  * @param map The map instance to draw the segments on.
  * @param segments The array of segment objects containing polyline, start coordinates, and alt_name.
  */
-export const drawSegments = (map: Map, segments: Segment[]): void => {
+export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBase[]): void => {
     console.log(
         'Drawing segments:',
         segments.map((segment) => segment.alt_name)
@@ -33,6 +34,12 @@ export const drawSegments = (map: Map, segments: Segment[]): void => {
         ]);
         startMarker.setStyle(createMarkerStyle());
 
+        // Create trail base icon
+        const trailBaseIcons = trailBases.map((trailBase) => createTrailBaseMarker(trailBase.coordinates))
+        trailBaseIcons.forEach(icon => {
+            icon.setStyle(createTrailBaseMarkerStyle)
+        });
+
         // Create a text label layer for the segment
         const decodedPolyline = decodePolyline(segment.polyline);
         const textLabelLayer = createTextLabelLayer(decodedPolyline, segment, map);
@@ -40,6 +47,8 @@ export const drawSegments = (map: Map, segments: Segment[]): void => {
         // Add features to the vector source
         vectorSource.addFeature(lineFeature);
         vectorSource.addFeature(startMarker);
+        trailBaseIcons.forEach(icon => vectorSource.addFeature(icon))
+        
         const source = textLabelLayer.getSource();
         if (source) {
             source.getFeatures().forEach((feature) => vectorSource.addFeature(feature));

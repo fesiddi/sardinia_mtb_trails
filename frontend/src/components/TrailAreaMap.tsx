@@ -13,7 +13,7 @@ interface TrailAreaMapProps {
     trailBases: TrailBase[] | null | undefined;
 }
 
-const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName }) => {
+const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName, trailBases }) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstanceRef = useRef<OLMap | null>(null);
     const [segments, setSegments] = useState<Segment[]>([]);
@@ -56,8 +56,8 @@ const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName }) => {
 
 
   useEffect(() => {
-      if (mapInstanceRef.current && segments.length > 0) {
-        drawSegments(mapInstanceRef.current, segments)
+      if (mapInstanceRef.current && segments.length > 0 && trailBases) {
+        drawSegments(mapInstanceRef.current, segments, trailBases)
       }
   }, [segments]);
 
