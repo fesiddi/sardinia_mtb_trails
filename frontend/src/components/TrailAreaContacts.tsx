@@ -20,7 +20,7 @@ const TrailAreaContacts: React.FC<TrailAreaContactsProps> = ({ instagram }) => {
                                 rel="noopener noreferrer"
                                 className={styles.iconLink}
                             >
-                                <FaInstagram className={styles.icon}/> Trail Area Page
+                                <FaInstagram className={styles.icon}/> Instagram Page
                             </a>
                         </li>
                     ))}

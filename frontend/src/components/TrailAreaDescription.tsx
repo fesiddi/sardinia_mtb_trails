@@ -10,7 +10,7 @@ const TrailAreaDescription: React.FC<TrailAreaDescriptionProps> = ({name,
 }) => {
     return (
         <div>
-            <h2>{name}</h2>
+            <h2>{name} Trail Area</h2>
             <p>{description}</p>
         </div>
     );

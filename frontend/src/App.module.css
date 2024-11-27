@@ -5,6 +5,8 @@
   justify-content: center;
   min-height: 100vh;
   padding: 0 0.5rem;
+  background-color: #52796f;
+  color:#cad2c5;
 }
 
 .areasList {
@@ -26,6 +28,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background-color: #354f52;
 }
 
 .error {

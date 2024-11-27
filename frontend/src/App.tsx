@@ -26,7 +26,7 @@ function App() {
 
     return (
         <div className={styles.container}>
-            <h1>Trail Areas</h1>
+            <h1>Sardinia MTB Trail Areas</h1>
             {error && <div className={styles.error}>{error}</div>}
             <div className={styles.areasList}>
                 {trailAreas.map((area) => (
