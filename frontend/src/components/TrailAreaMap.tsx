@@ -7,6 +7,7 @@ import { drawSegments } from '../utils/mapUtils';
 import { Segment } from '../types/Segment';
 import { fetchAreaSegments } from '../api';
 import { TrailBase } from '../types/TrailArea';
+import { initializePopup } from '../utils/popupUtils';
 
 interface TrailAreaMapProps {
     areaShortName: string;
@@ -47,6 +48,8 @@ const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName, trailBases }
         console.log('Initializing map');
         const mapInstance = initializeMap(mapRef.current, start_lng, start_lat);
         mapInstanceRef.current = mapInstance;
+
+        initializePopup(mapInstance);
 
         return () => {
             console.log('Cleaning up map');

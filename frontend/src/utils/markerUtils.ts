@@ -2,6 +2,7 @@ import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Style, Fill, Stroke, Circle, Icon } from 'ol/style';
 import { fromLonLat } from 'ol/proj';
+import { TrailBase } from '../types/TrailArea';
 
 /**
  * Creates a marker style.
@@ -32,10 +33,13 @@ export const createMarker = (start_latlng: [number, number]): Feature => {
 };
 
 
-export const createTrailBaseMarker = (coordinates: [number, number]): Feature => {
-    return new Feature({
-        geometry: new Point(fromLonLat(coordinates)),
+export const createTrailBaseMarker = (trailBase: TrailBase): Feature => {
+    const feature = new Feature({
+        geometry: new Point(fromLonLat(trailBase.coordinates)),
     });
+    feature.set('type', 'trailBaseMarker');
+    feature.set('name', trailBase.name);
+    return feature;
 }
 
 export const createTrailBaseMarkerStyle = () =>

@@ -35,7 +35,7 @@ export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBas
         startMarker.setStyle(createMarkerStyle());
 
         // Create trail base icon
-        const trailBaseIcons = trailBases.map((trailBase) => createTrailBaseMarker(trailBase.coordinates))
+        const trailBaseIcons = trailBases.map((trailBase) => createTrailBaseMarker(trailBase))
         trailBaseIcons.forEach(icon => {
             icon.setStyle(createTrailBaseMarkerStyle)
         });
