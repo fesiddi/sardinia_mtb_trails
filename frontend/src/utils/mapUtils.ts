@@ -13,12 +13,11 @@ import { TrailBase } from '../types/TrailArea';
  * @param map The map instance to draw the segments on.
  * @param segments The array of segment objects containing polyline, start coordinates, and alt_name.
  */
-export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBase[]): void => {
+export const drawSegments = (map: Map, segments: Segment[]): void => {
     console.log(
         'Drawing segments:',
         segments.map((segment) => segment.alt_name)
-    ); // Debugging statement
-
+    );
     // Create a single VectorSource to hold all features
     const vectorSource = new VectorSource();
 
@@ -34,12 +33,6 @@ export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBas
         ]);
         startMarker.setStyle(createMarkerStyle());
 
-        // Create trail base icon
-        const trailBaseIcons = trailBases.map((trailBase) => createTrailBaseMarker(trailBase))
-        trailBaseIcons.forEach(icon => {
-            icon.setStyle(createTrailBaseMarkerStyle)
-        });
-
         // Create a text label layer for the segment
         const decodedPolyline = decodePolyline(segment.polyline);
         const textLabelLayer = createTextLabelLayer(decodedPolyline, segment, map);
@@ -47,7 +40,6 @@ export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBas
         // Add features to the vector source
         vectorSource.addFeature(lineFeature);
         vectorSource.addFeature(startMarker);
-        trailBaseIcons.forEach(icon => vectorSource.addFeature(icon))
         
         const source = textLabelLayer.getSource();
         if (source) {
@@ -63,3 +55,26 @@ export const drawSegments = (map: Map, segments: Segment[], trailBases: TrailBas
     // Add the VectorLayer to the map
     map.addLayer(vectorLayer);
 };
+
+/**
+ * Draws trail base markers on the map.
+ * @param map The OpenLayers map instance.
+ * @param trailBases The array of trail base objects.
+ */
+export const drawTrailBases = (map: Map, trailBases: TrailBase[]): void => {
+    const vectorSource = new VectorSource();
+
+    trailBases.forEach((trailBase) => {
+        const trailBaseMarker = createTrailBaseMarker(trailBase);
+        trailBaseMarker.setStyle(createTrailBaseMarkerStyle());
+        vectorSource.addFeature(trailBaseMarker);
+    });
+
+    // Create a single VectorLayer with the VectorSource
+    const vectorLayer = new VectorLayer({
+        source: vectorSource,
+    });
+
+    // Add the VectorLayer to the map
+    map.addLayer(vectorLayer);
+}

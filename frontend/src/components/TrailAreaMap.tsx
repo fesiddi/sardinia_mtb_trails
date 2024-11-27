@@ -3,7 +3,7 @@ import 'ol/ol.css';
 import { Map as OLMap } from 'ol';
 import styles from './TrailAreaMap.module.css';
 import { initializeMap } from '../utils/mapInitialization'
-import { drawSegments } from '../utils/mapUtils';
+import { drawSegments, drawTrailBases } from '../utils/mapUtils';
 import { Segment } from '../types/Segment';
 import { fetchAreaSegments } from '../api';
 import { TrailBase } from '../types/TrailArea';
@@ -49,6 +49,12 @@ const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName, trailBases }
         const mapInstance = initializeMap(mapRef.current, start_lng, start_lat);
         mapInstanceRef.current = mapInstance;
 
+        drawSegments(mapInstance, segments);
+
+        if (trailBases) {
+            drawTrailBases(mapInstance, trailBases);
+        }
+
         initializePopup(mapInstance);
 
         return () => {
@@ -56,13 +62,6 @@ const TrailAreaMap: React.FC<TrailAreaMapProps> = ({ areaShortName, trailBases }
             mapInstance.setTarget(undefined);
         };
     }, [segments]);
-
-
-  useEffect(() => {
-      if (mapInstanceRef.current && segments.length > 0 && trailBases) {
-        drawSegments(mapInstanceRef.current, segments, trailBases)
-      }
-  }, [segments]);
 
     return (
         <div className={styles.mapContainer}>
