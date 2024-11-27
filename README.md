@@ -47,7 +47,7 @@ This will run black and isort to format and sort your code.
 
 To run tests, use the following command:
 ```bash
-mdocker compose app ake test
+docker compose app make test
 ```
 
 This will run your test suite using pytest.
