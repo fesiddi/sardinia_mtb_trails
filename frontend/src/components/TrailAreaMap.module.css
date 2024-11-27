@@ -1,0 +1,32 @@
+.mapContainer {
+  width: 100%;
+  height: 600px;
+}
+
+.olPopup {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    color:black;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    display: block;
+    z-index: 1000;
+}
+
+.olPopupCloser {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    background-color: white;
+    color:black;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.olPopupContent a{
+  color: black;
+  text-decoration: underline;
+}

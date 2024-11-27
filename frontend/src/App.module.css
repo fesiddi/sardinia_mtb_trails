@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  background-color: #52796f;
+  color:#cad2c5;
+}
+
+.areasList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.area {
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #354f52;
+}
+
+.error {
+    color: red;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: #ffe6e6;
+}
+
+/* Optional: Add media queries for additional responsiveness */
+@media (max-width: 768px) {
+  .area {
+    width: 90%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .area {
+    width: 80%;
+  }
+}
