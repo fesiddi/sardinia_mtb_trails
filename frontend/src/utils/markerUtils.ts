@@ -37,8 +37,8 @@ export const createTrailBaseMarker = (trailBase: TrailBase): Feature => {
     const feature = new Feature({
         geometry: new Point(fromLonLat(trailBase.coordinates)),
     });
-    feature.set('type', 'trailBaseMarker');
-    feature.set('name', trailBase.name);
+    feature.set('type', 'trailBase');
+    feature.set('trailBaseProps', trailBase);
     return feature;
 }
 

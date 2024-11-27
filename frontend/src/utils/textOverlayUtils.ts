@@ -56,7 +56,7 @@ export const createTextLabelLayer = (
     map: Map
 ): VectorLayer => {
     const geometry = new LineString(coordinates);
-    const feature = new Feature({ geometry, segment });
+    const feature = new Feature({ geometry, segmentProps: segment });
     feature.set('type', 'segment')
 
     const source = new VectorSource({
