@@ -5,10 +5,9 @@ import styles from './TrailAreaContacts.module.css'
 
 interface TrailAreaContactsProps {
     instagram: string[];
-    localRiders: LocalRider[]
 }
 
-const TrailAreaContacts: React.FC<TrailAreaContactsProps> = ({ instagram, localRiders }) => {
+const TrailAreaContacts: React.FC<TrailAreaContactsProps> = ({ instagram }) => {
     return (
         <div>
             <h2>Contacts</h2>
@@ -23,22 +22,6 @@ const TrailAreaContacts: React.FC<TrailAreaContactsProps> = ({ instagram, localR
                                 className={styles.iconLink}
                             >
                                 <FaInstagram className={styles.icon}/> Trail Area Page
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <h3>Local Riders</h3>
-                <ul className={styles.list}>
-                    {localRiders.map((rider) => (
-                        <li key={rider.strava_id}>
-                            <a
-                                href={rider.strava_id}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {rider.name}
                             </a>
                         </li>
                     ))}

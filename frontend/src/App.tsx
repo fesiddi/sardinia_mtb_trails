@@ -37,7 +37,6 @@ function App() {
                         <TrailAreaMap areaShortName={area.s_name} trailBases={area.trail_bases} />
                         <TrailAreaContacts
                             instagram={area.instagram}
-                            localRiders={area.local_riders}
                         />
                     </div>
                 ))}
