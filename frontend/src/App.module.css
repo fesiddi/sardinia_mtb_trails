@@ -28,6 +28,15 @@
   padding: 20px;
 }
 
+.error {
+    color: red;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: #ffe6e6;
+}
+
 /* Optional: Add media queries for additional responsiveness */
 @media (max-width: 768px) {
   .area {

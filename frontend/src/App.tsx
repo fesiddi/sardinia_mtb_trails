@@ -27,6 +27,7 @@ function App() {
     return (
         <div className={styles.container}>
             <h1>Trail Areas</h1>
+            {error && <div className={styles.error}>{error}</div>}
             <div className={styles.areasList}>
                 {trailAreas.map((area) => (
                     <div key={area.name} className={styles.area}>
@@ -34,10 +35,11 @@ function App() {
                             name={area.name}
                             description={area.description}
                         />
-                        <TrailAreaMap areaShortName={area.s_name} trailBases={area.trail_bases} />
-                        <TrailAreaContacts
-                            instagram={area.instagram}
+                        <TrailAreaMap
+                            areaShortName={area.s_name}
+                            trailBases={area.trail_bases}
                         />
+                        <TrailAreaContacts instagram={area.instagram} />
                     </div>
                 ))}
             </div>
