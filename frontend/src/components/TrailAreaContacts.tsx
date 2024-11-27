@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { LocalRider } from '../types/TrailArea';
 import { FaInstagram } from 'react-icons/fa';
 import styles from './TrailAreaContacts.module.css'
 
